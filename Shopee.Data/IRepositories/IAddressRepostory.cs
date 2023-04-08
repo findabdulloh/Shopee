@@ -10,4 +10,5 @@ public interface IAddressRepostory
     Task<bool> DeleteAsync(Expression<Func<Address, bool>> expression);
     Task<Address> GetAsync(Expression<Func<Address, bool>> expression);
     Task<List<Address>> GetAllASync(Expression<Func<Address, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
 }

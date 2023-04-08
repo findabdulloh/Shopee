@@ -9,4 +9,5 @@ public interface ICartRepostory
     Task<bool> DeleteAsync(Expression<Func<Cart, bool>> expression);
     Task<Cart> GetAsync(Expression<Func<Cart, bool>> expression);
     Task<List<Cart>> GetAllASync(Expression<Func<Cart, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
 }

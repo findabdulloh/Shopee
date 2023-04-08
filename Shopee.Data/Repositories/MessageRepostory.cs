@@ -11,7 +11,6 @@ public class MessageRepostory : IMessageRepostory
     public async Task<Message> CreateAsync(Message message)
     {
         var userForInsert = await this.context.Messages.AddAsync(message);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -20,7 +19,6 @@ public class MessageRepostory : IMessageRepostory
         var MessageForDelete = await this.context.Messages.FirstOrDefaultAsync(expression);
 
         this.context.Messages.Remove(MessageForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -33,12 +31,13 @@ public class MessageRepostory : IMessageRepostory
     public async Task<Message> UpdateAsync(Message message)
     {
         var messageForUpdate = await this.context.Messages.FirstOrDefaultAsync(u => u.Id == message.Id);
-
-        messageForUpdate.Text = message.Text;
+        this.context.Messages.Update(messageForUpdate);
         messageForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        await this.context.SaveChangesAsync();
 
         return messageForUpdate;
     }
+
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

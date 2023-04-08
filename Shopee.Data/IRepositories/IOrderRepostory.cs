@@ -7,6 +7,9 @@ public interface IOrderRepostory
 {
     Task<Order> CreateAsync(Order order);
     Task<bool> DeleteAsync(Expression<Func<Order, bool>> expression);
+    Task<Order> UpdateAsync(Order order);
     Task<Order> GetAsync(Expression<Func<Order, bool>> expression);
     Task<List<Order>> GetAllASync(Expression<Func<Order, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

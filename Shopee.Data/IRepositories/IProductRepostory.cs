@@ -10,4 +10,6 @@ public interface IProductRepostory
     Task<bool> DeleteAsync(Expression<Func<Product, bool>> expression);
     Task<Product> GetAsync(Expression<Func<Product, bool>> expression);
     Task<List<Product>> GetAllASync(Expression<Func<Product, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

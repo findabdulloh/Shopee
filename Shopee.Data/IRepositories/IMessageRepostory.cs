@@ -10,4 +10,6 @@ public interface IMessageRepostory
     Task<bool> DeleteAsync(Expression<Func<Message, bool>> expression);
     Task<Message> GetAsync(Expression<Func<Message, bool>> expression);
     Task<List<Message>> GetAllASync(Expression<Func<Message, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

@@ -11,7 +11,6 @@ public class OrderRepostory : IOrderRepostory
     public async Task<Order> CreateAsync(Order order)
     {
         var userForInsert = await this.context.Orders.AddAsync(order);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -20,7 +19,6 @@ public class OrderRepostory : IOrderRepostory
         var OrderForDelete = await this.context.Orders.FirstOrDefaultAsync(expression);
 
         this.context.Orders.Remove(OrderForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -29,5 +27,17 @@ public class OrderRepostory : IOrderRepostory
 
     public async Task<Order> GetAsync(Expression<Func<Order, bool>> expression)
     => await this.context.Orders.FirstOrDefaultAsync(expression);
+
+    public async Task<Order> UpdateAsync(Order order)
+    {
+        var orderForUpdate = await this.context.Orders.FirstOrDefaultAsync(u => u.Id == order.Id);
+        this.context.Orders.Update(orderForUpdate);
+        orderForUpdate.UpdatedAt = DateTime.UtcNow;
+
+        return orderForUpdate;
+    }
+
+    public async Task<bool> SaveChangesAsync()
+             => 0 < (await context.SaveChangesAsync());
 
 }

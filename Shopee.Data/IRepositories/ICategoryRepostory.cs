@@ -10,4 +10,6 @@ public interface ICategoryRepostory
     Task<bool> DeleteAsync(Expression<Func<Category, bool>> expression);
     Task<Category> GetAsync(Expression<Func<Category, bool>> expression);
     Task<List<Category>> GetAllASync(Expression<Func<Category, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

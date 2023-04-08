@@ -13,7 +13,6 @@ public class AddressRepostory : IAddressRepostory
     public async Task<Address> CreateAsync(Address address)
     {
         var userForInsert = await this.context.Addresses.AddAsync(address);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -22,7 +21,6 @@ public class AddressRepostory : IAddressRepostory
         var AddressForDelete = await this.context.Addresses.FirstOrDefaultAsync(expression);
 
         this.context.Addresses.Remove(AddressForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -32,19 +30,16 @@ public class AddressRepostory : IAddressRepostory
     public async Task<Address> UpdateAsync(Address address)
     {
         var addressForUpdate = await this.context.Addresses.FirstOrDefaultAsync(u => u.Id == address.Id);
-
-        addressForUpdate.HouseNumber = address.HouseNumber;
-        addressForUpdate.DoorNumber = address.DoorNumber;
+        this.context.Addresses.Update(addressForUpdate);
         addressForUpdate.UpdatedAt = DateTime.UtcNow;
-        addressForUpdate.City = address.City;
-        addressForUpdate.District = address.District;
-        addressForUpdate.Neighborhood = address.Neighborhood;
-
-        await this.context.SaveChangesAsync();
 
         return addressForUpdate;
     }
 
     public async Task<List<Address>> GetAllASync(Expression<Func<Address, bool>> expression)
         => await this.context.Addresses.ToListAsync();
+
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

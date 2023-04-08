@@ -11,7 +11,6 @@ public class CatergoryRepostory : ICategoryRepostory
     public async Task<Category> CreateAsync(Category category)
     {
         var userForInsert = await this.context.Categories.AddAsync(category);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -20,7 +19,6 @@ public class CatergoryRepostory : ICategoryRepostory
         var CategoryForDelete = await this.context.Categories.FirstOrDefaultAsync(expression);
 
         this.context.Categories.Remove(CategoryForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -33,13 +31,12 @@ public class CatergoryRepostory : ICategoryRepostory
     public async Task<Category> UpdateAsync(Category category)
     {
         var categoryForUpdate = await this.context.Categories.FirstOrDefaultAsync(u => u.Id == category.Id);
-
-        categoryForUpdate.Description = category.Description;
+        this.context.Categories.Update(categoryForUpdate);
         categoryForUpdate.UpdatedAt = DateTime.UtcNow;
-        categoryForUpdate.Name = category.Name;
-
-        await this.context.SaveChangesAsync();
 
         return categoryForUpdate;
     }
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

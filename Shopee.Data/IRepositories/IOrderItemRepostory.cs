@@ -10,4 +10,6 @@ public interface IOrderItemRepostory
     Task<bool> DeleteAsync(Expression<Func<OrderItem, bool>> expression);
     Task<OrderItem> GetAsync(Expression<Func<OrderItem, bool>> expression);
     Task<List<OrderItem>> GetAllASync(Expression<Func<OrderItem, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

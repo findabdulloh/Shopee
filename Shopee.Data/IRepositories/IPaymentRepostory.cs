@@ -10,4 +10,6 @@ public interface IPaymentRepostory
     Task<bool> DeleteAsync(Expression<Func<Payment, bool>> expression);
     Task<Payment> GetAsync(Expression<Func<Payment, bool>> expression);
     Task<List<Payment>> GetAllASync(Expression<Func<Payment, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

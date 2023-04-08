@@ -17,7 +17,6 @@ public class UserRepostory : IUserRepostory
     public async Task<User> CreateAsync(User user)
     {
         var userForInsert = await this.context.Users.AddAsync(user);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -26,7 +25,6 @@ public class UserRepostory : IUserRepostory
         var ProductForDelete = await this.context.Users.FirstOrDefaultAsync(expression);
 
         this.context.Users.Remove(ProductForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -39,16 +37,12 @@ public class UserRepostory : IUserRepostory
     public async Task<User> UpdateAsync(User user)
     {
         var userForUpdate = await this.context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-
-        userForUpdate.FirstName = user.FirstName;
-        userForUpdate.LastName = user.LastName;
-        userForUpdate.Email = user.Email;
-        userForUpdate.UserName = user.UserName;
-        userForUpdate.Password = user.Password;
-        userForUpdate.Phone = user.Phone;
-
-        await this.context.SaveChangesAsync();
+        this.context.Users.Update(userForUpdate);
+        userForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return userForUpdate;
     }
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

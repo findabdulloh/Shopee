@@ -11,7 +11,6 @@ public class ProductRepostory : IProductRepostory
     public async Task<Product> CreateAsync(Product user)
     {
         var productForInsert = await this.context.Products.AddAsync(user);
-        await this.context.SaveChangesAsync();
         return productForInsert.Entity;
     }
 
@@ -20,7 +19,6 @@ public class ProductRepostory : IProductRepostory
         var ProductForDelete = await this.context.Products.FirstOrDefaultAsync(expression);
 
         this.context.Products.Remove(ProductForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -33,15 +31,12 @@ public class ProductRepostory : IProductRepostory
     public async Task<Product> UpdateAsync(Product product)
     {
         var productForUpdate = await this.context.Products.FirstOrDefaultAsync(u => u.Id == product.Id);
-
-        productForUpdate.Price = product.Price;
-        productForUpdate.Name = product.Name;
-        productForUpdate.Description = product.Description;
-        productForUpdate.Count = product.Count;
+        this.context.Products.Update(productForUpdate);
         productForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        await this.context.SaveChangesAsync();
 
         return productForUpdate;
     }
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

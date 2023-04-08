@@ -10,4 +10,6 @@ public interface IUserRepostory
     Task<bool> DeleteAsync(Expression<Func<User, bool>> expression);
     Task<User> GetAsync(Expression<Func<User, bool>> expression);
     Task<List<User>> GetAllASync(Expression<Func<User, bool>> expression = null);
+    Task<bool> SaveChangesAsync();
+
 }

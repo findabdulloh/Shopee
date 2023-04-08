@@ -11,7 +11,6 @@ public class PaymentRepostory : IPaymentRepostory
     public async Task<Payment> CreateAsync(Payment payment)
     {
         var userForInsert = await this.context.Payments.AddAsync(payment);
-        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -20,7 +19,6 @@ public class PaymentRepostory : IPaymentRepostory
         var PaymentForDelete = await this.context.Payments.FirstOrDefaultAsync(expression);
 
         this.context.Payments.Remove(PaymentForDelete);
-        await this.context.SaveChangesAsync();
         return true;
     }
 
@@ -33,12 +31,12 @@ public class PaymentRepostory : IPaymentRepostory
     public async Task<Payment> UpdateAsync(Payment payment)
     {
         var paymentForUpdate = await this.context.Payments.FirstOrDefaultAsync(u => u.Id == payment.Id);
-
-        paymentForUpdate.IsPaid = payment.IsPaid;
+        this.context.Payments.Update(paymentForUpdate);
         paymentForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        await this.context.SaveChangesAsync();
 
         return paymentForUpdate;
     }
+    public async Task<bool> SaveChangesAsync()
+            => 0 < (await context.SaveChangesAsync());
+
 }

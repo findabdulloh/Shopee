@@ -31,8 +31,10 @@ public class CatergoryRepostory : ICategoryRepostory
     public async Task<Category> UpdateAsync(Category category)
     {
         var categoryForUpdate = await this.context.Categories.FirstOrDefaultAsync(u => u.Id == category.Id);
-        this.context.Categories.Update(categoryForUpdate);
+
+        categoryForUpdate.Description = category.Description;
         categoryForUpdate.UpdatedAt = DateTime.UtcNow;
+        categoryForUpdate.Name = category.Name;
 
         return categoryForUpdate;
     }

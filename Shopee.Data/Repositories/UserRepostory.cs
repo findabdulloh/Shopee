@@ -37,8 +37,13 @@ public class UserRepostory : IUserRepostory
     public async Task<User> UpdateAsync(User user)
     {
         var userForUpdate = await this.context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-        this.context.Users.Update(userForUpdate);
-        userForUpdate.UpdatedAt = DateTime.UtcNow;
+
+        userForUpdate.FirstName = user.FirstName;
+        userForUpdate.LastName = user.LastName;
+        userForUpdate.Email = user.Email;
+        userForUpdate.UserName = user.UserName;
+        userForUpdate.Password = user.Password;
+        userForUpdate.Phone = user.Phone;
 
         return userForUpdate;
     }

@@ -31,7 +31,8 @@ public class MessageRepostory : IMessageRepostory
     public async Task<Message> UpdateAsync(Message message)
     {
         var messageForUpdate = await this.context.Messages.FirstOrDefaultAsync(u => u.Id == message.Id);
-        this.context.Messages.Update(messageForUpdate);
+
+        messageForUpdate.Text = message.Text;
         messageForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return messageForUpdate;

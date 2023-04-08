@@ -13,6 +13,7 @@ public class CartRepostory : ICartRepostory
     public async Task<Cart> CreateAsync(Cart cart)
     {
         var userForInsert = await this.context.Carts.AddAsync(cart);
+        await this.context.SaveChangesAsync();
         return userForInsert.Entity;
     }
 
@@ -33,7 +34,8 @@ public class CartRepostory : ICartRepostory
     public async Task<Cart> UpdateAsync(Cart cart)
     {
         var cartForUpdate = await this.context.Carts.FirstOrDefaultAsync(u => u.Id == cart.Id);
-        this.context.Carts.Update(cartForUpdate);
+
+        cartForUpdate.OrderItemIds = cart.OrderItemIds;
         cartForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return cartForUpdate;

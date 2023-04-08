@@ -31,7 +31,11 @@ public class ProductRepostory : IProductRepostory
     public async Task<Product> UpdateAsync(Product product)
     {
         var productForUpdate = await this.context.Products.FirstOrDefaultAsync(u => u.Id == product.Id);
-        this.context.Products.Update(productForUpdate);
+
+        productForUpdate.Price = product.Price;
+        productForUpdate.Name = product.Name;
+        productForUpdate.Description = product.Description;
+        productForUpdate.Count = product.Count;
         productForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return productForUpdate;

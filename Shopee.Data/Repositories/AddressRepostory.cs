@@ -30,8 +30,13 @@ public class AddressRepostory : IAddressRepostory
     public async Task<Address> UpdateAsync(Address address)
     {
         var addressForUpdate = await this.context.Addresses.FirstOrDefaultAsync(u => u.Id == address.Id);
-        this.context.Addresses.Update(addressForUpdate);
+
+        addressForUpdate.HouseNumber = address.HouseNumber;
+        addressForUpdate.DoorNumber = address.DoorNumber;
         addressForUpdate.UpdatedAt = DateTime.UtcNow;
+        addressForUpdate.City = address.City;
+        addressForUpdate.District = address.District;
+        addressForUpdate.Neighborhood = address.Neighborhood;
 
         return addressForUpdate;
     }

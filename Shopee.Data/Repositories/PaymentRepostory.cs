@@ -31,7 +31,8 @@ public class PaymentRepostory : IPaymentRepostory
     public async Task<Payment> UpdateAsync(Payment payment)
     {
         var paymentForUpdate = await this.context.Payments.FirstOrDefaultAsync(u => u.Id == payment.Id);
-        this.context.Payments.Update(paymentForUpdate);
+
+        paymentForUpdate.IsPaid = payment.IsPaid;
         paymentForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return paymentForUpdate;

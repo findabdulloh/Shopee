@@ -31,7 +31,8 @@ public class OrderRepostory : IOrderRepostory
     public async Task<Order> UpdateAsync(Order order)
     {
         var orderForUpdate = await this.context.Orders.FirstOrDefaultAsync(u => u.Id == order.Id);
-        this.context.Orders.Update(orderForUpdate);
+
+        orderForUpdate.Status = order.Status;
         orderForUpdate.UpdatedAt = DateTime.UtcNow;
 
         return orderForUpdate;

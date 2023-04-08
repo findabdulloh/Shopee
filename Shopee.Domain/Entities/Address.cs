@@ -4,6 +4,7 @@ namespace Shopee.Domain.Entities;
 
 public class Address : Auditable
 {
+    public long UserId { get; set; }
     public string City { get; set; }
     public string District { get; set; }
     public string Neighborhood { get; set; }

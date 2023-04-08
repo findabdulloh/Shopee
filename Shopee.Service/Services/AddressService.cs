@@ -22,7 +22,10 @@ public class AddressService : IAddressService
             UserId = dto.UserId
         };
 
-        return await this.addressRepository.CreateAsync(mappedEntity);
+        var insertedEntity = await this.addressRepository.CreateAsync(mappedEntity);
+
+        await this.addressRepository.SaveChangesAsync();
+        return insertedEntity;
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -32,6 +35,7 @@ public class AddressService : IAddressService
             return false;
 
         await this.addressRepository.DeleteAsync(a => a.Id == id);
+        await this.addressRepository.SaveChangesAsync();
         return true;
     }
 
@@ -66,6 +70,8 @@ public class AddressService : IAddressService
         entity.UpdatedAt = DateTime.UtcNow;
         entity.UserId = dto.UserId;
 
-        return await this.addressRepository.UpdateAsync(entity);
+        var updatedEntity = await this.addressRepository.UpdateAsync(entity);
+        await this.addressRepository.SaveChangesAsync();
+        return updatedEntity;
     }
 }

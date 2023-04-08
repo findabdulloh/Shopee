@@ -26,6 +26,7 @@ public class CategoryService : ICategoryService
 
         var addedModel = await genericRepository.CreateAsync(mapperCategory);
 
+        await this.genericRepository.SaveChangesAsync();
         return addedModel;
     }
 
@@ -37,6 +38,7 @@ public class CategoryService : ICategoryService
             return false;
 
         await genericRepository.DeleteAsync(c => c.Id == id);
+        await this.genericRepository.SaveChangesAsync();
         return true;
     }
 
@@ -57,6 +59,7 @@ public class CategoryService : ICategoryService
         category.UpdatedAt = DateTime.UtcNow;
 
         var updatedCategory = await genericRepository.UpdateAsync(category);
+        await this.genericRepository.SaveChangesAsync();
         return updatedCategory;
     }
 }

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
-public interface ICartRepostory
+public interface ICartRepository
 {
     Task<Cart> CreateAsync(Cart cart);
     Task<Cart> UpdateAsync(Cart cart);

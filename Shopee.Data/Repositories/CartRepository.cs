@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
 
-public class CartRepostory : ICartRepostory
+public class CartRepository : ICartRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
 

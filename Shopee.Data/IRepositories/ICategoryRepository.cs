@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
 
-public interface ICategoryRepostory
+public interface ICategoryRepository
 {
     Task<Category> CreateAsync(Category category);
     Task<Category> UpdateAsync(Category category);

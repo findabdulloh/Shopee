@@ -1,4 +1,5 @@
-﻿using Shopee.Data.IRepositories;
+﻿using Shopee.Data.DbContexts;
+using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Service.DTOs.Categories;
@@ -8,12 +9,13 @@ namespace Shopee.Service.Services
 {
     public class CategoryService : ICategoryService
     {
-        private IGenericRepository<Category> genericRepository = new GenericRepository<Category>();
-        public Task<Category> CreateAsync(CategoryCreationDto dto)
-        {
-            var entity = this.genericRepository.GetAsync(u => u.Name == dto.Name);
+        private IGenericRepository<Category> genericRepository = new GenericRepository<Category>(new ShopeDbContext());
 
-            if(entity != null) 
+        public async Task<Category> CreateAsync(CategoryCreationDto dto)
+        {
+            var entity = await genericRepository.GetAsync(u => u.Name == dto.Name);
+
+            if(entity is not null) 
                 return null;
 
             var mapperCategory = new Category()
@@ -22,35 +24,40 @@ namespace Shopee.Service.Services
                 Description = dto.Description,
             };
 
-            var addModel = this.genericRepository.InsertAsync(mapperCategory);
+            var addedModel = await genericRepository.InsertAsync(mapperCategory);
 
-            return addModel;
+            return addedModel;
         }
 
         public async Task<bool> DeleteAsync(long id)
         {
-            var entity = this.genericRepository.GetAsync(c=> c.Id == id);
+            var entity = await genericRepository.GetAsync(c=> c.Id == id);
 
             if (entity is null)
                 return false;
 
-            await this.genericRepository.DeleteAsync(c => c.Id == id);
+            await genericRepository.DeleteAsync(c => c.Id == id);
             return true;
         }
 
-        public Task<List<Category>> GetAllAsync()
+        public async Task<List<Category>> GetAllAsync()
         {
-            return  this.genericRepository.GetAllAsync();
+             var entities = await genericRepository.GetAllAsync();
+            return entities.ToList();
         }
 
-        public Task<Category> GetByIdAsync(long id)
+        public async Task<Category> GetByIdAsync(long id)
         {
-            return this.genericRepository.GetAsync(c => c.Id == id);
+            var entity = await this.genericRepository.GetAsync(c => c.Id == id);
+            if (entity is null) 
+                return null;
+
+            return entity;
         }
 
-        public Task<Category> ModifyAsync(long id, CategoryCreationDto dto)
+        public async Task<Category> ModifyAsync(long id, CategoryCreationDto dto)
         {
-            var category = this.genericRepository.GetAsync(c => c.Id == id);
+            var category = await genericRepository.GetAsync(c => c.Id == id);
             if (category is null)
                 return null;
 
@@ -59,7 +66,7 @@ namespace Shopee.Service.Services
                 Name = dto.Name,
                 Description = dto.Description,
             };
-            var updatedCategory = this.genericRepository.UpdateAsync(mappedCategory);
+            var updatedCategory = await genericRepository.UpdateAsync(mappedCategory);
             return updatedCategory;
         }
     }

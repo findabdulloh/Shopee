@@ -1,5 +1,6 @@
 ﻿using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using Shopee.Domain.Enums;
 using Shopee.Service.DTOs;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
@@ -8,16 +9,17 @@ namespace Shopee.Service.Services;
 
 public class UserService : IUserService
 {
-    IUserRepostory repostory;
+    IUserRepository repostory;
 
-    public UserService(IUserRepostory repostory)
+    public UserService(IUserRepository repostory)
     {
         this.repostory = repostory;
     }
 
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
-        var userExist = await this.repostory.GetAllASync(u=>u.UserName.Equals(dto.UserName) || u.Email.Equals(dto.Email));
+        var userExist = await this.repostory.GetAllASync(u=>u.UserName == dto.UserName || u.Email == dto.Email);
+        
         if(userExist is not null)
             return null;
 
@@ -29,6 +31,7 @@ public class UserService : IUserService
             UserName = dto.UserName,
             Password = dto.Password,
             Phone = dto.Phone,
+            UserRole = UserRole.Customer
         };
 
         await this.repostory.CreateAsync(mappedUser);
@@ -42,6 +45,8 @@ public class UserService : IUserService
             UserName = mappedUser.UserName,
             Phone = mappedUser.Phone,
             Role = mappedUser.UserRole,
+            CreatedAt = mappedUser.CreatedAt,
+            UpdatedAt = mappedUser.UpdatedAt,
         };
 
         await this.repostory.SaveChangesAsync();
@@ -102,7 +107,9 @@ public class UserService : IUserService
 
     public async Task<UserViewDto> LoginAsync(string password, string username)
     {
-        var checkUser = await this.repostory.GetAsync(u=> u.Password.Equals(password) && u.UserName.Equals(username));
+        var checkUser = await this.repostory
+            .GetAsync(u => u.Password == password && u.UserName == username);
+        
         if(checkUser is null)
             return null;
 
@@ -116,6 +123,8 @@ public class UserService : IUserService
             UserName = checkUser.UserName,
             Phone = checkUser.Phone,
             Role = checkUser.UserRole,
+            CreatedAt = checkUser.CreatedAt,
+            UpdatedAt = checkUser.UpdatedAt
         };
         return userForResult;
     }
@@ -124,6 +133,13 @@ public class UserService : IUserService
     {
         var userForUpdate = await this.repostory.GetAsync(u => u.Id.Equals(id));
         if(userForUpdate is null) return null;
+
+        userForUpdate.Phone = dto.Phone;
+        userForUpdate.Email = dto.Email;
+        userForUpdate.FirstName = dto.FirstName;
+        userForUpdate.LastName = dto.LastName;
+        userForUpdate.Password = dto.Password;
+        userForUpdate.UserName = dto.UserName;
 
         await this.repostory.UpdateAsync(userForUpdate);
 

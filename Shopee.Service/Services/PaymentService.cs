@@ -1,5 +1,6 @@
 ﻿using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using Shopee.Domain.Enums;
 using Shopee.Service.DTOs.Payments;
 using Shopee.Service.Interfaces;
 
@@ -7,16 +8,36 @@ namespace Shopee.Service.Services;
 
 public class PaymentService : IPaymentService
 {
-    IPaymentRepostory repostory;
+    IPaymentRepository repostory;
+    IOrderItemService orderItemSer;
 
-    public PaymentService(IPaymentRepostory repostory)
+    public PaymentService(IPaymentRepository repostory, IOrderItemService orderItemSer)
     {
         this.repostory = repostory;
+        this.orderItemSer = orderItemSer;
     }
 
-    public Task<Payment> CreateAsync(PaymentCreationDto dto)
+    public async Task<Payment> CreateAsync(PaymentCreationDto dto)
     {
-        throw new NotImplementedException();
+        decimal amount = 0;
+
+        foreach (var item in await orderItemSer.GetAllAsync(u => u.OrderId == dto.OrderId))
+        {
+            amount += item.Amount;
+        }
+
+        var payment = new Payment
+        {
+            Type = dto.Type,
+            IsPaid = dto.Type != PaymentType.Cash,
+            CreatedAt = DateTime.UtcNow,
+            Amount = amount
+        };
+
+        var insertedEntity = await repostory.CreateAsync(payment);
+
+        await this.repostory.SaveChangesAsync();
+        return insertedEntity;
     }
 
     public async Task<bool> DeleteAsync(long id)

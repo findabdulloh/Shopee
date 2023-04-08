@@ -30,6 +30,7 @@ public class ProductService : IProductService
 
         var addedModel = await productRepository.CreateAsync(mappedProduct);
 
+        await this.productRepository.SaveChangesAsync();
         return new ProductViewDto
         {
             SearchTags = addedModel.SearchTags,
@@ -53,6 +54,7 @@ public class ProductService : IProductService
             return false;
 
         await productRepository.DeleteAsync(c => c.Id == id);
+        await this.productRepository.SaveChangesAsync();
         return true;
     }
 
@@ -114,6 +116,8 @@ public class ProductService : IProductService
         entity.SearchTags = dto.SearchTags;
 
         var updatedEntity = await productRepository.UpdateAsync(entity);
+
+        await this.productRepository.SaveChangesAsync();
 
         return new ProductViewDto
         {

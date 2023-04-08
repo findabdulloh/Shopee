@@ -10,5 +10,6 @@ public interface IGenericRepostory<T> where T : Auditable
     Task<T> UpdateAsync (T entity);
     Task<bool> DeleteAsync (Expression<Func<T, bool>> expression);
     Task<T> GetAsync(Expression<Func<T, bool>> expression);
-    Task<IEnumerable<T>> GetAllAsync ();
+    Task<IQueryable<T>> GetAllAsync ();
+    Task<bool> SaveChangesAsync();
 }

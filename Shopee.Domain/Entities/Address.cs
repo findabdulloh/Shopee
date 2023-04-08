@@ -9,6 +9,4 @@ public class Address : Auditable
     public string Neighborhood { get; set; }
     public int HouseNumber { get; set; }
     public int? DoorNumber { get; set; }
-
-    //public IEnumerable<User> Users { get; set; }
 }

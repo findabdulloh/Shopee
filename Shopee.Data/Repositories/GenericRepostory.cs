@@ -8,13 +8,13 @@ namespace Shopee.Data.Repositories;
 
 public class GenericRepostory<T> : IGenericRepostory<T> where T : Auditable
 {
-    private readonly ShopeDbContext context;
+    private readonly ShopeDbContext dbContext;
     private readonly DbSet<T> dbSet;
 
-    public GenericRepostory(ShopeDbContext context)
+    public GenericRepostory(ShopeDbContext dbContext)
     {
-        this.context = context;
-        this.dbSet = context.Set<T>();
+        this.dbContext = dbContext;
+        this.dbSet = dbContext.Set<T>();
     }
 
     public async Task<bool> DeleteAsync(Expression<Func<T, bool>> expression)
@@ -25,30 +25,27 @@ public class GenericRepostory<T> : IGenericRepostory<T> where T : Auditable
             return false;
 
         this.dbSet.RemoveRange(entitiesToDelete);
-        await context.SaveChangesAsync();
         return true;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
-        => await this.dbSet.ToListAsync();
+    public async Task<IQueryable<T>> GetAllAsync()
+        => this.dbSet;
 
 
     public async Task<T> GetAsync(Expression<Func<T, bool>> expression)
         => await this.dbSet.FirstOrDefaultAsync(expression);
 
     public async Task<T> InsertAsync(T entity)
-    {
-        var entityForInsert = await this.dbSet.AddAsync(entity);
-        await context.SaveChangesAsync();
-        return entityForInsert.Entity;
-    }
+        => (await this.dbSet.AddAsync(entity)).Entity;
 
 
     public async Task<T> UpdateAsync(T entity)
     {
         entity.UpdatedAt = DateTime.UtcNow;
         this.dbSet.Update(entity);
-        await context.SaveChangesAsync();
         return entity;
     }
+
+    public async Task<bool> SaveChangesAsync()
+        => 0 < (await dbContext.SaveChangesAsync());
 }

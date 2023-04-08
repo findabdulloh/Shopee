@@ -13,6 +13,6 @@ class Program
     public static async Task Main(string[] args)
     {
         ShopeDbContext context = new ShopeDbContext();
-        IGenericRepostory<User> user = new GenericRepostory<User>(context);
+        IGenericRepository<User> user = new GenericRepository<User>(context);
     }
 }

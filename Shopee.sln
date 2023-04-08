@@ -5,6 +5,7 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Web", "Shopee.Web\Shopee.Web.csproj", "{3DCD11D9-3687-4AAC-B257-3793B9D00141}"
 EndProject
+<<<<<<< Updated upstream
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Data", "Shopee.Data\Shopee.Data.csproj", "{04E5D1F3-B637-41AF-B73F-9134EF79AC9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Domain", "Shopee.Domain\Shopee.Domain.csproj", "{4FFA9C2E-3FF8-4DB1-9377-1ECC4A150271}"
@@ -12,6 +13,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Service", "Shopee.Service\Shopee.Service.csproj", "{2290CB01-6E3D-4AF6-92F1-38262F28D880}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopee.Presentation", "Shopee.Presentation\Shopee.Presentation.csproj", "{D5F2B1FE-A7FB-41E4-9C84-2EB824E69022}"
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Data", "Shopee.Data\Shopee.Data.csproj", "{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Domain", "Shopee.Domain\Shopee.Domain.csproj", "{1366E369-0AFD-4D6A-A9DD-D223B5253978}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Service", "Shopee.Service\Shopee.Service.csproj", "{866C2E4F-027F-445E-BBA0-AACE3DE21702}"
+>>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +31,7 @@ Global
 		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
 		{04E5D1F3-B637-41AF-B73F-9134EF79AC9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04E5D1F3-B637-41AF-B73F-9134EF79AC9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04E5D1F3-B637-41AF-B73F-9134EF79AC9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +48,20 @@ Global
 		{D5F2B1FE-A7FB-41E4-9C84-2EB824E69022}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5F2B1FE-A7FB-41E4-9C84-2EB824E69022}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5F2B1FE-A7FB-41E4-9C84-2EB824E69022}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using Shopee.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
-public class OrderItemRepostory : IOrderItemRepostory
+public class OrderItemRepository : IOrderItemRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
     public async Task<OrderItem> CreateAsync(OrderItem orderItem)

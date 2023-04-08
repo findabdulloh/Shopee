@@ -5,7 +5,7 @@ using Shopee.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
-public class MessageRepostory : IMessageRepostory
+public class MessageRepository : IMessageRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
     public async Task<Message> CreateAsync(Message message)

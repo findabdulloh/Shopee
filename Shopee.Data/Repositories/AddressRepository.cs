@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
 
-public class AddressRepostory : IAddressRepostory
+public class AddressRepository : IAddressRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
 

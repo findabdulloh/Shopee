@@ -1,73 +1,62 @@
-﻿using Shopee.Data.DbContexts;
+﻿using Microsoft.EntityFrameworkCore;
 using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Service.DTOs.Categories;
 using Shopee.Service.Interfaces;
 
-namespace Shopee.Service.Services
+namespace Shopee.Service.Services;
+
+public class CategoryService : ICategoryService
 {
-    public class CategoryService : ICategoryService
+    private ICategoryRepository genericRepository = new CategoryRepository();
+    public async Task<Category> CreateAsync(CategoryCreationDto dto)
     {
-        private IGenericRepository<Category> genericRepository = new GenericRepository<Category>(new ShopeDbContext());
+        var entity = await genericRepository.GetAsync(u => u.Name == dto.Name);
 
-        public async Task<Category> CreateAsync(CategoryCreationDto dto)
+        if (entity is not null)
+            return null;
+
+        var mapperCategory = new Category()
         {
-            var entity = await genericRepository.GetAsync(u => u.Name == dto.Name);
+            Name = dto.Name,
+            Description = dto.Description,
+            CreatedAt = DateTime.UtcNow
+        };
 
-            if(entity is not null) 
-                return null;
+        var addedModel = await genericRepository.CreateAsync(mapperCategory);
 
-            var mapperCategory = new Category()
-            {
-                Name = dto.Name,
-                Description = dto.Description,
-            };
+        return addedModel;
+    }
 
-            var addedModel = await genericRepository.InsertAsync(mapperCategory);
+    public async Task<bool> DeleteAsync(long id)
+    {
+        var entity = await genericRepository.GetAsync(c => c.Id == id);
 
-            return addedModel;
-        }
+        if (entity is null)
+            return false;
 
-        public async Task<bool> DeleteAsync(long id)
-        {
-            var entity = await genericRepository.GetAsync(c=> c.Id == id);
+        await genericRepository.DeleteAsync(c => c.Id == id);
+        return true;
+    }
 
-            if (entity is null)
-                return false;
+    public async Task<List<Category>> GetAllAsync()
+        => await this.genericRepository.GetAllASync();
 
-            await genericRepository.DeleteAsync(c => c.Id == id);
-            return true;
-        }
+    public async Task<Category> GetByIdAsync(long id)
+        => await this.genericRepository.GetAsync(c => c.Id == id);
 
-        public async Task<List<Category>> GetAllAsync()
-        {
-             var entities = await genericRepository.GetAllAsync();
-            return entities.ToList();
-        }
+    public async Task<Category> ModifyAsync(long id, CategoryCreationDto dto)
+    {
+        var category = await genericRepository.GetAsync(c => c.Id == id);
+        if (category is null)
+            return null;
 
-        public async Task<Category> GetByIdAsync(long id)
-        {
-            var entity = await this.genericRepository.GetAsync(c => c.Id == id);
-            if (entity is null) 
-                return null;
+        category.Name = dto.Name;
+        category.Description = dto.Description;
+        category.UpdatedAt = DateTime.UtcNow;
 
-            return entity;
-        }
-
-        public async Task<Category> ModifyAsync(long id, CategoryCreationDto dto)
-        {
-            var category = await genericRepository.GetAsync(c => c.Id == id);
-            if (category is null)
-                return null;
-
-            var mappedCategory = new Category()
-            {
-                Name = dto.Name,
-                Description = dto.Description,
-            };
-            var updatedCategory = await genericRepository.UpdateAsync(mappedCategory);
-            return updatedCategory;
-        }
+        var updatedCategory = await genericRepository.UpdateAsync(category);
+        return updatedCategory;
     }
 }

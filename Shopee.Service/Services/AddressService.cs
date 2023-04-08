@@ -5,83 +5,67 @@ using Shopee.Domain.Entities;
 using Shopee.Service.DTOs.Adresses;
 using Shopee.Service.Interfaces;
 
-namespace Shopee.Service.Services
+namespace Shopee.Service.Services;
+
+public class AddressService : IAddressService
 {
-    public class AddressService : IAddressService
+    private IAddressRepository addressRepository = new AddressRepository();
+    public async Task<Address> CreateAsync(AddressCreationDto dto)
     {
-        private IGenericRepository<Address> genericRepository = new GenericRepository<Address>(new ShopeDbContext());
-        public Task<Address> CreateAsync(AddressCreationDto dto)
+        var mappedEntity = new Address()
         {
-            var entity = this.genericRepository.GetAsync(a => a.HouseNumber == dto.HouseNumber);
-            if (entity is not null)
-                return null;
-            var mappedEntity = new Address()
-            {
-                City = dto.City,
-                District = dto.District,
-                Neighborhood = dto.Neighborhood,
-                HouseNumber = dto.HouseNumber,
-                DoorNumber = dto.DoorNumber
-            };
+            City = dto.City,
+            District = dto.District,
+            Neighborhood = dto.Neighborhood,
+            HouseNumber = dto.HouseNumber,
+            DoorNumber = dto.DoorNumber,
+            UserId = dto.UserId
+        };
 
-            var addedEntity = this.genericRepository.InsertAsync(mappedEntity);
-            return addedEntity;
-        }
+        return await this.addressRepository.CreateAsync(mappedEntity);
+    }
 
-        public async Task<bool> DeleteAsync(long id)
-        {
-            var entity = this.genericRepository.GetAsync(a => a.Id == id);
-            if (entity is null)
-                return false;
+    public async Task<bool> DeleteAsync(long id)
+    {
+        var entity = this.addressRepository.GetAsync(a => a.Id == id);
+        if (entity is null)
+            return false;
 
-            await this.genericRepository.DeleteAsync(a => a.Id == id);
-            return true;
-        }
+        await this.addressRepository.DeleteAsync(a => a.Id == id);
+        return true;
+    }
 
-        public async Task<List<Address>> GetAllAsync()
-        {
-            var entities = await this.genericRepository.GetAllAsync();
-            return entities.ToList();
-        }
+    public async Task<List<Address>> GetAllAsync()
+        => await this.addressRepository.GetAllASync();
 
-        public Task<Address> GetByIdAsync(long id)
-        {
-            var entity = this.genericRepository.GetAsync(a => a.Id == id);
+    public Task<Address> GetByIdAsync(long id)
+    {
+        var entity = this.addressRepository.GetAsync(a => a.Id == id);
 
-            if (entity is null)
-                return null;
+        if (entity is null)
+            return null;
 
-            return entity;
-        }
+        return entity;
+    }
 
-        public Task<Address> GetByUserIdAsync(long userId)
-        {
-            var entity = this.genericRepository.GetAsync(a => a.UserId == userId);
-            if (entity is null)
-                return null;
+    public async Task<Address> GetByUserIdAsync(long userId)
+        => await this.addressRepository.GetAsync(a => a.UserId == userId);
 
-            return entity;
-        }
+    public async Task<Address> ModifyAsync(long id, AddressCreationDto dto)
+    {
+        var entity = await this.addressRepository.GetAsync(a => a.Id == id);
 
-        public Task<Address> ModifyAsync(long id, AddressCreationDto dto)
-        {
-            var entity = this.genericRepository.GetAsync(a => a.Id == id);
+        if (entity is null)
+            return null;
 
-            if (entity is null)
-                return null;
+        entity.City = dto.City;
+        entity.District = dto.District;
+        entity.Neighborhood = dto.Neighborhood;
+        entity.HouseNumber = dto.HouseNumber;
+        entity.DoorNumber = dto.DoorNumber;
+        entity.UpdatedAt = DateTime.UtcNow;
+        entity.UserId = dto.UserId;
 
-            var mappedAddress = new Address()
-            {
-                City = dto.City,
-                District = dto.District,
-                Neighborhood = dto.Neighborhood,
-                HouseNumber = dto.HouseNumber,
-                DoorNumber = dto.DoorNumber,
-                UpdatedAt = DateTime.UtcNow,
-            };
-
-            var updatedAddress = this.genericRepository.UpdateAsync(mappedAddress);
-            return updatedAddress;
-        }
+        return await this.addressRepository.UpdateAsync(entity);
     }
 }

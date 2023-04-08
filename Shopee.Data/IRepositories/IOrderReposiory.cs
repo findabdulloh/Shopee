@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
 
-public interface IOrderRepostory
+public interface IOrderRepository
 {
     Task<Order> CreateAsync(Order order);
     Task<bool> DeleteAsync(Expression<Func<Order, bool>> expression);

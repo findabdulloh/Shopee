@@ -11,11 +11,11 @@ public class User : Auditable
     public string Phone { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public long CartId { get; set; }
+    public long? CartId { get; set; }
     //public Cart Cart { get; set; }
-    public long AddressId { get; set; }
+    public long? AddressId { get; set; }
     //public Address Address { get; set; }
-    public Role UserRole { get; set; }
+    public Role UserRole { get; set; } = Role.Customer;
 
     //public IEnumerable<Message> Messages { get; set; }
     //public IEnumerable<Order> Orders { get; set; }

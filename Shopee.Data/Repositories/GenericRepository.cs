@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
 
-public class GenericRepostory<T> : IGenericRepostory<T> where T : Auditable
+public class GenericRepository<T> : IGenericRepository<T> where T : Auditable
 {
     private readonly ShopeDbContext dbContext;
     private readonly DbSet<T> dbSet;
 
-    public GenericRepostory(ShopeDbContext dbContext)
+    public GenericRepository(ShopeDbContext dbContext)
     {
         this.dbContext = dbContext;
         this.dbSet = dbContext.Set<T>();

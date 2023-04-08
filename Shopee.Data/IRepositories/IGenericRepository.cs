@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
 
-public interface IGenericRepostory<T> where T : Auditable
+public interface IGenericRepository<T> where T : Auditable
 {
     Task<T> InsertAsync (T entity);
     Task<T> UpdateAsync (T entity);

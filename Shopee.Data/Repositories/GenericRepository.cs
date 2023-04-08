@@ -48,4 +48,5 @@ public class GenericRepository<T> : IGenericRepository<T> where T : Auditable
 
     public async Task<bool> SaveChangesAsync()
         => 0 < (await dbContext.SaveChangesAsync());
+
 }

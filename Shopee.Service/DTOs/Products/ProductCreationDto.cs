@@ -7,4 +7,5 @@ public class ProductCreationDto
     public int Count { get; set; }
     public decimal Price { get; set; }
     public long CategoryId { get; set; }
+    public List<string> SearchTags { get; set; }
 }

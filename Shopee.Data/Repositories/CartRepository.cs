@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 
@@ -33,12 +34,7 @@ public class CartRepository : ICartRepository
 
     public async Task<Cart> UpdateAsync(Cart cart)
     {
-        var cartForUpdate = await this.context.Carts.FirstOrDefaultAsync(u => u.Id == cart.Id);
-
-        cartForUpdate.OrderItemIds = cart.OrderItemIds;
-        cartForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return cartForUpdate;
+        return context.Update(cart).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

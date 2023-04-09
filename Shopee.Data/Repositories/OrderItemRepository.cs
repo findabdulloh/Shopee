@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class OrderItemRepository : IOrderItemRepository
@@ -30,12 +31,7 @@ public class OrderItemRepository : IOrderItemRepository
 
     public async Task<OrderItem> UpdateAsync(OrderItem orderItem)
     {
-        var orderItemsForUpdate = await this.context.OrderItems.FirstOrDefaultAsync(u => u.Id == orderItem.Id);
-
-        orderItemsForUpdate.Count = orderItem.Count;
-        orderItemsForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return orderItemsForUpdate;
+        return context.Update(orderItem).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class MessageRepository : IMessageRepository
@@ -30,12 +31,7 @@ public class MessageRepository : IMessageRepository
 
     public async Task<Message> UpdateAsync(Message message)
     {
-        var messageForUpdate = await this.context.Messages.FirstOrDefaultAsync(u => u.Id == message.Id);
-
-        messageForUpdate.Text = message.Text;
-        messageForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return messageForUpdate;
+        return context.Update(message).Entity;
     }
 
     public async Task<bool> SaveChangesAsync()

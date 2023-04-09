@@ -30,12 +30,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order> UpdateAsync(Order order)
     {
-        var orderForUpdate = await this.context.Orders.FirstOrDefaultAsync(u => u.Id == order.Id);
-
-        orderForUpdate.Status = order.Status;
-        orderForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return orderForUpdate;
+        return context.Update(order).Entity;
     }
 
     public async Task<bool> SaveChangesAsync()

@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class PaymentRepository : IPaymentRepository
@@ -30,12 +31,7 @@ public class PaymentRepository : IPaymentRepository
 
     public async Task<Payment> UpdateAsync(Payment payment)
     {
-        var paymentForUpdate = await this.context.Payments.FirstOrDefaultAsync(u => u.Id == payment.Id);
-
-        paymentForUpdate.IsPaid = payment.IsPaid;
-        paymentForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return paymentForUpdate;
+        return context.Update(payment).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

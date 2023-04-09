@@ -9,4 +9,5 @@ public class OrderViewDto : Auditable
     public Payment Payment { get; set; }
     public OrderStatus Status { get; set; }
     public long UserId { get; set; }
+    public decimal TotalPrice { get; set; }
 }

@@ -1,10 +1,11 @@
-﻿using Shopee.Service.DTOs.Products;
+﻿using Shopee.Domain.Commons;
+using Shopee.Service.DTOs.Products;
 
 namespace Shopee.Service.DTOs.OrderItems;
 
-public class OrderItemViewDto
+public class OrderItemViewDto : Auditable
 {
     public ProductViewDto Product { get; set; }
     public int Count { get; set; }
-    public decimal Amount { get; set; }
+    public decimal TotalPrice { get; set; }
 }

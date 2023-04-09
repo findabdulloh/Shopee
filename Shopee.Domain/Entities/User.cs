@@ -13,5 +13,6 @@ public class User : Auditable
     public string Password { get; set; }
     public long CartId { get; set; }
     public long AddressId { get; set; }
+    public string ProfilePhotoUrl { get; set; } = "https://i.stack.imgur.com/34AD2.jpg";
     public UserRole UserRole { get; set; }
 }

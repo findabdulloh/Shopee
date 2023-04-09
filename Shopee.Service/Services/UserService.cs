@@ -31,7 +31,8 @@ public class UserService : IUserService
             UserName = dto.UserName,
             Password = dto.Password,
             Phone = dto.Phone,
-            UserRole = UserRole.Customer
+            UserRole = UserRole.Customer,
+            ProfilePhotoUrl = dto.ProfilePhotoUrl
         };
 
         await this.repostory.CreateAsync(mappedUser);
@@ -47,6 +48,7 @@ public class UserService : IUserService
             Role = mappedUser.UserRole,
             CreatedAt = mappedUser.CreatedAt,
             UpdatedAt = mappedUser.UpdatedAt,
+            ProfilePhotoUrl = mappedUser.ProfilePhotoUrl
         };
 
         await this.repostory.SaveChangesAsync();
@@ -79,6 +81,7 @@ public class UserService : IUserService
                 UserName = user.UserName,
                 Phone = user.Phone,
                 Role = user.UserRole,
+                ProfilePhotoUrl = user.ProfilePhotoUrl,
             };
             result.Add(userForResult);
         }
@@ -101,6 +104,7 @@ public class UserService : IUserService
             UserName = user.UserName,
             Phone = user.Phone,
             Role = user.UserRole,
+            ProfilePhotoUrl = user.ProfilePhotoUrl,
         };
         return userForResult;
     }
@@ -124,7 +128,8 @@ public class UserService : IUserService
             Phone = checkUser.Phone,
             Role = checkUser.UserRole,
             CreatedAt = checkUser.CreatedAt,
-            UpdatedAt = checkUser.UpdatedAt
+            UpdatedAt = checkUser.UpdatedAt,
+            ProfilePhotoUrl = checkUser.ProfilePhotoUrl,
         };
         return userForResult;
     }
@@ -140,6 +145,7 @@ public class UserService : IUserService
         userForUpdate.LastName = dto.LastName;
         userForUpdate.Password = dto.Password;
         userForUpdate.UserName = dto.UserName;
+        userForUpdate.ProfilePhotoUrl = dto.ProfilePhotoUrl;
 
         await this.repostory.UpdateAsync(userForUpdate);
 
@@ -152,6 +158,7 @@ public class UserService : IUserService
             UserName = userForUpdate.UserName,
             Phone = userForUpdate.Phone,
             Role = userForUpdate.UserRole,
+            ProfilePhotoUrl = dto.ProfilePhotoUrl,
         };
 
         await this.repostory.SaveChangesAsync();

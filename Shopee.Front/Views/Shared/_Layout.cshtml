@@ -10,23 +10,22 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Shopee.Front</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <nav class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+            <div class=" container-fluid container ">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul style="margin-left:420px; color:#fff;" class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Categories</a>
                         </li>
                     </ul>
                 </div>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Cart</a>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Give Questiong</a>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Accaunt</a>
             </div>
         </nav>
     </header>

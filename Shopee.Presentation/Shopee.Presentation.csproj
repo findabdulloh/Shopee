@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shopee.Data\Shopee.Data.csproj" />
+    <ProjectReference Include="..\Shopee.Service\Shopee.Service.csproj" />
   </ItemGroup>
 
 </Project>

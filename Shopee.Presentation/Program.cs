@@ -18,53 +18,56 @@ class Program
     {
         //ShopeDbContext context = new ShopeDbContext();
         //IGenericRepository<User> user = new GenericRepository<User>(context);
-        IUserRepostory repo = new UserRepostory();
+        IUserRepository repo = new UserRepository();
         IUserService user = new UserService(repo);
 
-        //var users = new List<UserCreationDto>()
-        //{
-        //    new UserCreationDto()
-        //    {
-        //        FirstName = "Kamronbek",
-        //        LastName = "Sulaymonov",
-        //        Email = "komrondeveloper@gmail.com",
-        //        UserName = "komrondeveloper",
-        //        Password = "komronbek26",
-        //        Phone = "+998978743353",
-        //    },
-        //    new UserCreationDto()
-        //    {
-        //        FirstName = "John",
-        //        LastName = "Doe",
-        //        Email = "johndoe@gmail.com",
-        //        UserName = "johndoe",
-        //        Password = "password123",
-        //        Phone = "+1 (555) 555-5555"
-        //    },
-        //    new UserCreationDto()
-        //    {
-        //        FirstName = "Jane",
-        //        LastName = "Doe",
-        //        Email = "janedoe@gmail.com",
-        //        UserName = "janedoe",
-        //        Password = "password456",
-        //        Phone = "+1 (555) 555-5556"
-        //    },
-        //    new UserCreationDto()
-        //    {
-        //        FirstName = "Bob",
-        //        LastName = "Smith",
-        //        Email = "bobsmith@gmail.com",
-        //        UserName = "bobsmith",
-        //        Password = "password789",
-        //        Phone = "+1 (555) 555-5557"
-        //    },
-        //};
+        var users = new List<UserCreationDto>()
+        {
+            new UserCreationDto()
+            {
+                FirstName = "Kamronbek",
+                LastName = "Sulaymonov",
+                Email = "komrondeveloper@gmail.com",
+                UserName = "komrondeveloper",
+                Password = "komronbek26",
+                Phone = "+998978743353",
+            },
+            new UserCreationDto()
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Email = "johndoe@gmail.com",
+                UserName = "johndoe",
+                Password = "password123",
+                Phone = "+1 (555) 555-5555"
+            },
+            new UserCreationDto()
+            {
+                FirstName = "Jane",
+                LastName = "Doe",
+                Email = "janedoe@gmail.com",
+                UserName = "janedoe",
+                Password = "password456",
+                Phone = "+1 (555) 555-5556"
+            },
+            new UserCreationDto()
+            {
+                FirstName = "Bob",
+                LastName = "Smith",
+                Email = "bobsmith@gmail.com",
+                UserName = "bobsmith",
+                Password = "password789",
+                Phone = "+1 (555) 555-5557"
+            },
+        };
 
-        //foreach (var item in users)
-        //{
-        //    await user.CreateAsync(item);
-        //}
+        await user.DeleteAsync(5);
+        await user.DeleteAsync(6);
+        await user.DeleteAsync(7);
+        await user.DeleteAsync(8);
+        await user.DeleteAsync(9);
+        await user.DeleteAsync(10);
+        await user.DeleteAsync(11);
 
         var userss = await user.GetAllAsync();
         foreach (var item in userss)

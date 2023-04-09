@@ -9,13 +9,28 @@ namespace Shopee.Web.Controllers
 {
 	public class AdminController : Controller
 	{
-        private static IUserRepostory repo = new UserRepostory();
+        private static IUserRepository repo = new UserRepository();
         private IUserService userservice = new UserService(repo);
         public async Task<IActionResult> Users()
 		{
 			var users = await this.userservice.GetAllAsync();
 			return View(users);
 		}
-
-	}
+        public async Task<IActionResult> Orders()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Product()
+        {
+            return View();
+        }
+        public async Task<IActionResult> Questions()
+        {
+            return View();
+        }
+        public IActionResult Category()
+        {
+            return View();
+        }
+    }
 }

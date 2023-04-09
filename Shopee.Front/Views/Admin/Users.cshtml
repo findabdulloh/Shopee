@@ -3,7 +3,22 @@
 }
 
 @model List<UserViewDto>
-
-<div style="height: 100vh;" class="text-center">
-    <p>Iwladiiiiiiiii</p>
+<h1 class="text-center">Users</h1>
+<div class="container container-fluid d-flex  flex-wrap">
+    @foreach (var product in Model)
+    {
+        <div class="card" style="width: 18rem; margin: 20px 75px; border-radius:20px; border: 1px solid #111;">
+            <img src="@product.ProfilePhotoUrl" style="border-radius:20px;" class="card-img-top" alt="...">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <p class="card-text">@product.FirstName</p>
+                    <p class="card-text">@product.LastName</p>
+                </div>
+                <p class="card-text"><span style="font-weight:bold">Email:</span> @product.Email</p>
+                <p class="card-text"><span style="font-weight:bold">Username:</span> @product.UserName</p>
+                <p class="card-text"><span style="font-weight:bold">Phone:</span> @product.Phone</p>
+                <p class="card-text"><span style="font-weight:bold">Role:</span> @product.Role</p>
+            </div>
+        </div>
+    }
 </div>

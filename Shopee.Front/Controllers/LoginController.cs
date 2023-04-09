@@ -11,7 +11,7 @@ namespace Shopee.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private static IUserRepostory repo = new UserRepostory();
+        private static IUserRepository repo = new UserRepository();
         private IUserService userservice = new UserService(repo);
         public IActionResult Index()
         {

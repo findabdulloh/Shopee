@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class CategoryRepository : ICategoryRepository
@@ -30,13 +31,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category> UpdateAsync(Category category)
     {
-        var categoryForUpdate = await this.context.Categories.FirstOrDefaultAsync(u => u.Id == category.Id);
-
-        categoryForUpdate.Description = category.Description;
-        categoryForUpdate.UpdatedAt = DateTime.UtcNow;
-        categoryForUpdate.Name = category.Name;
-
-        return categoryForUpdate;
+        return context.Update(category).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

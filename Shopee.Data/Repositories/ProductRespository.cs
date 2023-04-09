@@ -3,6 +3,7 @@ using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class ProductRepository : IProductRepository
@@ -30,15 +31,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product> UpdateAsync(Product product)
     {
-        var productForUpdate = await this.context.Products.FirstOrDefaultAsync(u => u.Id == product.Id);
-
-        productForUpdate.Price = product.Price;
-        productForUpdate.Name = product.Name;
-        productForUpdate.Description = product.Description;
-        productForUpdate.Count = product.Count;
-        productForUpdate.UpdatedAt = DateTime.UtcNow;
-
-        return productForUpdate;
+        return context.Update(product).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

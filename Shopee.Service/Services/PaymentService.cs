@@ -1,4 +1,5 @@
 ﻿using Shopee.Data.IRepositories;
+using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
 using Shopee.Service.DTOs.Payments;
@@ -8,14 +9,8 @@ namespace Shopee.Service.Services;
 
 public class PaymentService : IPaymentService
 {
-    IPaymentRepository repostory;
-    IOrderItemService orderItemSer;
-
-    public PaymentService(IPaymentRepository repostory, IOrderItemService orderItemSer)
-    {
-        this.repostory = repostory;
-        this.orderItemSer = orderItemSer;
-    }
+    IPaymentRepository repostory = new PaymentRepository();
+    IOrderItemService orderItemSer = new OrderItemService();
 
     public async Task<Payment> CreateAsync(PaymentCreationDto dto)
     {

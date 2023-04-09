@@ -63,7 +63,7 @@ public class OrderItemService : IOrderItemService
     {
         var mappedDtos = new List<OrderItemViewDto>();
 
-        foreach (var item in await orderItemRepo.GetAllASync())
+        foreach (var item in await orderItemRepo.GetAllASync(expression))
         {
             var productDto = await productService.GetByIdAsync(item.ProductId);
 

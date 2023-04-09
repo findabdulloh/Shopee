@@ -1,4 +1,5 @@
 using Shopee.Data.IRepositories;
+using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
 using Shopee.Service.DTOs;
@@ -9,12 +10,7 @@ namespace Shopee.Service.Services;
 
 public class UserService : IUserService
 {
-    IUserRepository repostory;
-    public UserService(IUserRepository repostory)
-    {
-        this.repostory = repostory;
-    }
-
+    IUserRepository repostory = new UserRepository();
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
         var userExist = await this.repostory.GetAsync(u=>u.UserName == dto.UserName || u.Email == dto.Email);

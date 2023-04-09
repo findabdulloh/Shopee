@@ -4,6 +4,7 @@ using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using System;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace Shopee.Data.Repositories;
 public class UserRepository : IUserRepository
@@ -31,16 +32,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User> UpdateAsync(User user)
     {
-        var userForUpdate = await this.context.Users.FirstOrDefaultAsync(u => u.Id == user.Id);
-
-        userForUpdate.FirstName = user.FirstName;
-        userForUpdate.LastName = user.LastName;
-        userForUpdate.Email = user.Email;
-        userForUpdate.UserName = user.UserName;
-        userForUpdate.Password = user.Password;
-        userForUpdate.Phone = user.Phone;
-
-        return userForUpdate;
+        return context.Update(user).Entity;
     }
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

@@ -29,16 +29,8 @@ public class AddressRepository : IAddressRepository
 
     public async Task<Address> UpdateAsync(Address address)
     {
-        var addressForUpdate = await this.context.Addresses.FirstOrDefaultAsync(u => u.Id == address.Id);
+        return context.Update(address).Entity;
 
-        addressForUpdate.HouseNumber = address.HouseNumber;
-        addressForUpdate.DoorNumber = address.DoorNumber;
-        addressForUpdate.UpdatedAt = DateTime.UtcNow;
-        addressForUpdate.City = address.City;
-        addressForUpdate.District = address.District;
-        addressForUpdate.Neighborhood = address.Neighborhood;
-
-        return addressForUpdate;
     }
 
     public async Task<List<Address>> GetAllASync(Expression<Func<Address, bool>> expression)

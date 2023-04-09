@@ -13,5 +13,5 @@ public class User : Auditable
     public string Password { get; set; }
     public long CartId { get; set; }
     public long AddressId { get; set; }
-    public UserRole UserRole { get; set; }
+    public UserRole UserRole { get; set; } = UserRole.Customer;
 }

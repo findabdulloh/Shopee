@@ -10,6 +10,10 @@ public class UserService : IUserService
 {
     IUserRepostory repostory;
 
+    public UserService()
+    {
+    }
+
     public UserService(IUserRepostory repostory)
     {
         this.repostory = repostory;
@@ -17,9 +21,11 @@ public class UserService : IUserService
 
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
-        var userExist = await this.repostory.GetAllASync(u=>u.UserName.Equals(dto.UserName) || u.Email.Equals(dto.Email));
+        var userExist = (await this.repostory.GetAllASync()).FirstOrDefault(u => u.UserName.Equals(dto.UserName) && u.Email.Equals(dto.Email));
         if(userExist is not null)
+        {
             return null;
+        }
 
         var mappedUser = new User()
         {
@@ -61,7 +67,7 @@ public class UserService : IUserService
 
     public async Task<List<UserViewDto>> GetAllAsync()
     {
-        var users = await this.repostory.GetAllASync();
+        var users = await this.repostory.GetAllASync(u=> u.Id > -1);
         List<UserViewDto> result = new List<UserViewDto>();
         foreach (var user in users)
         {
@@ -100,9 +106,9 @@ public class UserService : IUserService
         return userForResult;
     }
 
-    public async Task<UserViewDto> LoginAsync(string password, string username)
+    public async Task<UserViewDto> LoginAsync(string username, string password)
     {
-        var checkUser = await this.repostory.GetAsync(u=> u.Password.Equals(password) && u.UserName.Equals(username));
+        var checkUser = (await this.repostory.GetAllASync()).FirstOrDefault(u => u.Password.Equals(password) && u.UserName.Equals(username));
         if(checkUser is null)
             return null;
 

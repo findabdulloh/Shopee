@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shopee.Domain\Shopee.Domain.csproj" />
+    <ProjectReference Include="..\Shopee.Service\Shopee.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\User\" />
   </ItemGroup>
 
 </Project>

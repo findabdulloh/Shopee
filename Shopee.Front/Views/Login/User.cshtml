@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "User Page";
+}
+@model UserViewDto
+
+<div style="height: 100vh;" class="text-center">
+    <h1 class="display-4">Welcome to User page dear @Model.FirstName @Model.LastName</h1>
+    <p>Your role @Model.Role</p>
+</div>

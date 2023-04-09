@@ -1,4 +1,4 @@
-﻿using Shopee.Data.IRepositories;
+using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
 using Shopee.Service.DTOs;
@@ -10,7 +10,6 @@ namespace Shopee.Service.Services;
 public class UserService : IUserService
 {
     IUserRepository repostory;
-
     public UserService(IUserRepository repostory)
     {
         this.repostory = repostory;
@@ -18,10 +17,11 @@ public class UserService : IUserService
 
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
-        var userExist = await this.repostory.GetAllASync(u=>u.UserName == dto.UserName || u.Email == dto.Email);
-        
+        var userExist = await this.repostory.GetAsync(u=>u.UserName == dto.UserName || u.Email == dto.Email);
         if(userExist is not null)
+        {
             return null;
+        }
 
         var mappedUser = new User()
         {
@@ -68,7 +68,7 @@ public class UserService : IUserService
 
     public async Task<List<UserViewDto>> GetAllAsync()
     {
-        var users = await this.repostory.GetAllASync();
+        var users = await this.repostory.GetAllASync(u=> u.Id > -1);
         List<UserViewDto> result = new List<UserViewDto>();
         foreach (var user in users)
         {
@@ -109,11 +109,11 @@ public class UserService : IUserService
         return userForResult;
     }
 
-    public async Task<UserViewDto> LoginAsync(string password, string username)
+    public async Task<UserViewDto> LoginAsync(string username, string password)
     {
         var checkUser = await this.repostory
             .GetAsync(u => u.Password == password && u.UserName == username);
-        
+            
         if(checkUser is null)
             return null;
 

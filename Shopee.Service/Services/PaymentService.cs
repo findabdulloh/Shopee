@@ -23,7 +23,7 @@ public class PaymentService : IPaymentService
 
         foreach (var item in await orderItemSer.GetAllAsync(u => u.OrderId == dto.OrderId))
         {
-            amount += item.Amount;  
+            amount += item.TotalPrice;
         }
 
         var payment = new Payment

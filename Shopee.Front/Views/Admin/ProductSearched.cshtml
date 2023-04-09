@@ -9,9 +9,10 @@
     <form class="container" method="get" action="@Url.Action("ProductSearched", "Admin")">
         <input style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="text" name="search" placeholder="Search...">
         <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="submit">Search</button>
+        <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent;" asp-action="Product">Back</button>
     </form>
-    
-    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Admin" asp-action="ProductCreate">Create</a>
+
+    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="User" asp-action="Create">Create</a>
 </div>
 
 <div class="container container-fluid d-flex  flex-wrap">

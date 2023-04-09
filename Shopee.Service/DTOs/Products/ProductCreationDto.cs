@@ -8,5 +8,5 @@ public class ProductCreationDto
     public decimal Price { get; set; }
     public long CategoryId { get; set; }
     public string SearchTags { get; set; }
-    public string PhotoUrl { get; set; }
+    public string PhotoUrl { get; set; } = "https://www.mrpanet.org/global_graphics/default-store-350x350.jpg";
 }

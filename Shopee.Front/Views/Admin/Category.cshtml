@@ -2,6 +2,43 @@
     Layout = "adminlayout";
 }
 
-<div style="height: 100vh;" class="text-center">
-    <p>Category</p>
+@model List<Category>
+<h1 class="text-center">Categories</h1>
+
+<div class="container d-flex justify-content-between pt-5">
+    <form class="container" method="get" action="@Url.Action("ProductSearched", "Admin")">
+        <input style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="text" name="search" placeholder="Search...">
+        <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="submit">Search</button>
+    </form>
+
+    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Admin" asp-action="ProductCreate">Create</a>
+</div>
+
+<div class="container container-fluid d-flex  flex-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@product.Id</th>
+                    <td>@product.Name</td>
+                    <td>@product.CreatedAt</td>
+                    <td>@product.Description</td>
+                    <td class="d-flex justify-content-around">
+                        <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateProduct","Admin", new {Id = product.Id})">Edit</a>
+                        <a class="nav-link btn" style="background-color: red; border-radius:20px; color: #fff;" href="@Url.Action("DeleteProduct", "Admin" , new {Id = product.Id})">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

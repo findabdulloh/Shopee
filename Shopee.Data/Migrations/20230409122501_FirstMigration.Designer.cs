@@ -13,8 +13,8 @@ using Shopee.Data.DbContexts;
 namespace Shopee.Data.Migrations
 {
     [DbContext(typeof(ShopeDbContext))]
-    [Migration("20230409120504_f2")]
-    partial class f2
+    [Migration("20230409122501_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

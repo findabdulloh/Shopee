@@ -1,21 +1,34 @@
 ﻿@{
-    Layout = "adminlayout";
 }
 
-@model List<ProductViewDto>
+@model Tuple<List<ProductViewDto>, List<Category>>
+
 <h1 class="text-center">Products</h1>
 
-<div class="container d-flex justify-content-between pt-5">
-    <form class="container" method="get" action="@Url.Action("ProductSearched", "Admin")">
+<div class="d-flex justify-content-between">
+    <div class="container d-flex justify-content-between pt-5">
+    <form class="container" method="get" action="@Url.Action("ProductSearched", "User")">
         <input style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="text" name="search" placeholder="Search...">
         <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="submit">Search</button>
     </form>
-    
-    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Admin" asp-action="ProductCreate">Create</a>
+    </div>
+
+    <div class="container d-flex justify-content-between pt-5">
+        <form id="filter-form" class="container d-flex justify-content-between" method="get" action="@Url.Action("FilteredByCategory", "User")">
+            <select class="form-select" aria-label="Default select example" name="category">
+                <option selected value="">All</option>
+                @foreach (var category in Model.Item2)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+            <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="submit">Filter</button>
+        </form>
+    </div>
 </div>
 
 <div class="container container-fluid d-flex  flex-wrap">
-    @foreach (var product in Model)
+    @foreach (var product in Model.Item1)
     {
         <div class="card" style="width: 18rem; margin: 20px 65px; padding:10px ; border-radius:20px; border: 1px solid #776BCC;">
             <img src="@product.PhotoUrl" style="border-radius:20px;" class="card-img-top" alt="...">
@@ -28,10 +41,7 @@
                 <p class="card-text"><span style="font-weight:bold">Count:</span> @product.Count</p>
                 <p class="card-text"><span style="font-weight:bold">Description:</span> @product.Description</p>
             </div>
-            <div class="d-flex justify-content-between">
-                <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateProduct","Admin", new {Id = product.Id})">Update</a>
-                <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("DeleteProduct", "Admin" , new {Id = product.Id})">Delete</a>
-            </div>
+            <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateProduct","Admin", new {Id = product.Id})">Add to cart</a>
         </div>
     }
 </div>

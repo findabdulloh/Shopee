@@ -1,5 +1,6 @@
-﻿using Shopee.Data.IRepositories;
+using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using Shopee.Domain.Enums;
 using Shopee.Service.DTOs;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
@@ -8,20 +9,15 @@ namespace Shopee.Service.Services;
 
 public class UserService : IUserService
 {
-    IUserRepostory repostory;
-
-    public UserService()
-    {
-    }
-
-    public UserService(IUserRepostory repostory)
+    IUserRepository repostory;
+    public UserService(IUserRepository repostory)
     {
         this.repostory = repostory;
     }
 
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
-        var userExist = (await this.repostory.GetAllASync()).FirstOrDefault(u => u.UserName.Equals(dto.UserName) && u.Email.Equals(dto.Email));
+        var userExist = await this.repostory.GetAsync(u=>u.UserName == dto.UserName || u.Email == dto.Email);
         if(userExist is not null)
         {
             return null;
@@ -35,6 +31,8 @@ public class UserService : IUserService
             UserName = dto.UserName,
             Password = dto.Password,
             Phone = dto.Phone,
+            UserRole = UserRole.Customer,
+            ProfilePhotoUrl = dto.ProfilePhotoUrl
         };
 
         await this.repostory.CreateAsync(mappedUser);
@@ -48,6 +46,9 @@ public class UserService : IUserService
             UserName = mappedUser.UserName,
             Phone = mappedUser.Phone,
             Role = mappedUser.UserRole,
+            CreatedAt = mappedUser.CreatedAt,
+            UpdatedAt = mappedUser.UpdatedAt,
+            ProfilePhotoUrl = mappedUser.ProfilePhotoUrl
         };
 
         await this.repostory.SaveChangesAsync();
@@ -80,6 +81,7 @@ public class UserService : IUserService
                 UserName = user.UserName,
                 Phone = user.Phone,
                 Role = user.UserRole,
+                ProfilePhotoUrl = user.ProfilePhotoUrl,
             };
             result.Add(userForResult);
         }
@@ -102,13 +104,16 @@ public class UserService : IUserService
             UserName = user.UserName,
             Phone = user.Phone,
             Role = user.UserRole,
+            ProfilePhotoUrl = user.ProfilePhotoUrl,
         };
         return userForResult;
     }
 
     public async Task<UserViewDto> LoginAsync(string username, string password)
     {
-        var checkUser = (await this.repostory.GetAllASync()).FirstOrDefault(u => u.Password.Equals(password) && u.UserName.Equals(username));
+        var checkUser = await this.repostory
+            .GetAsync(u => u.Password == password && u.UserName == username);
+            
         if(checkUser is null)
             return null;
 
@@ -122,6 +127,9 @@ public class UserService : IUserService
             UserName = checkUser.UserName,
             Phone = checkUser.Phone,
             Role = checkUser.UserRole,
+            CreatedAt = checkUser.CreatedAt,
+            UpdatedAt = checkUser.UpdatedAt,
+            ProfilePhotoUrl = checkUser.ProfilePhotoUrl,
         };
         return userForResult;
     }
@@ -130,6 +138,14 @@ public class UserService : IUserService
     {
         var userForUpdate = await this.repostory.GetAsync(u => u.Id.Equals(id));
         if(userForUpdate is null) return null;
+
+        userForUpdate.Phone = dto.Phone;
+        userForUpdate.Email = dto.Email;
+        userForUpdate.FirstName = dto.FirstName;
+        userForUpdate.LastName = dto.LastName;
+        userForUpdate.Password = dto.Password;
+        userForUpdate.UserName = dto.UserName;
+        userForUpdate.ProfilePhotoUrl = dto.ProfilePhotoUrl;
 
         await this.repostory.UpdateAsync(userForUpdate);
 
@@ -142,6 +158,7 @@ public class UserService : IUserService
             UserName = userForUpdate.UserName,
             Phone = userForUpdate.Phone,
             Role = userForUpdate.UserRole,
+            ProfilePhotoUrl = dto.ProfilePhotoUrl,
         };
 
         await this.repostory.SaveChangesAsync();

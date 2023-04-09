@@ -1,4 +1,4 @@
-﻿using Shopee.Domain.Commons;
+using Shopee.Domain.Commons;
 using Shopee.Domain.Enums;
 
 namespace Shopee.Domain.Entities;
@@ -14,4 +14,5 @@ public class User : Auditable
     public long CartId { get; set; }
     public long AddressId { get; set; }
     public UserRole UserRole { get; set; } = UserRole.Customer;
+    public string ProfilePhotoUrl { get; set; } = "https://i.stack.imgur.com/34AD2.jpg";
 }

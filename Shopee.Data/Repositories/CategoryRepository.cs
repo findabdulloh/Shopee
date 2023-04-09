@@ -5,7 +5,7 @@ using Shopee.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
-public class CatergoryRepostory : ICategoryRepostory
+public class CategoryRepository : ICategoryRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
     public async Task<Category> CreateAsync(Category category)

@@ -5,7 +5,7 @@ using Shopee.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
-public class PaymentRepostory : IPaymentRepostory
+public class PaymentRepository : IPaymentRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
     public async Task<Payment> CreateAsync(Payment payment)

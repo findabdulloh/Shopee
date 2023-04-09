@@ -10,5 +10,6 @@ public class UserViewDto : Auditable
     public string UserName { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+    public string ProfilePhotoUrl { get; set; }
     public UserRole Role { get; set; }
 }

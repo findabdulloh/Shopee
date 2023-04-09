@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
 
-public interface IAddressRepostory
+public interface IAddressRepository
 {
     Task<Address> CreateAsync(Address address);
     Task<Address> UpdateAsync(Address address);

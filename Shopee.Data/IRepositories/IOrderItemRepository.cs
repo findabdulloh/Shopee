@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Shopee.Data.IRepositories;
 
-public interface IOrderItemRepostory
+public interface IOrderItemRepository
 {
     Task<OrderItem> CreateAsync(OrderItem orderItem);
     Task<OrderItem> UpdateAsync(OrderItem orderItem);

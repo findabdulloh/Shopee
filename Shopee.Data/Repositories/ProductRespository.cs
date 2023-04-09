@@ -5,7 +5,7 @@ using Shopee.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
-public class ProductRepostory : IProductRepostory
+public class ProductRepository : IProductRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
     public async Task<Product> CreateAsync(Product user)

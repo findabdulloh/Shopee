@@ -8,7 +8,7 @@ public interface ICartService
     Task<CartViewDto> CreateAsync(CartCreationDto dto);
     Task<CartViewDto> GetByIdAsync(long id);
     Task<bool> DeleteAsync(long id);
-    Task<CartViewDto> DropItemAsync(long itemId);
+    Task<CartViewDto> DropItemAsync(long userId, long itemId);
     Task<CartViewDto> AddItemAsync(long userId, OrderItemCreationDto orderItemCreationDto);
     Task<List<CartViewDto>> GetAllAsync();
 }

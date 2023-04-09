@@ -56,7 +56,7 @@ public class OrderService : IOrderService
         if (user is null)
             return null;
 
-        var cart = await cartService.GetByIdAsync(dto.UserId);
+        var cart = await cartService.GetByIdAsync(user.CartId);
         foreach (var item in cart.Items)
             if (item.Count > item.Product.Count)
                 return null;
@@ -73,16 +73,17 @@ public class OrderService : IOrderService
             PaymentId = payment.Id
         });
 
-        var totalPrice = 0m;
         foreach (var item in cart.Items)
         {
             var orderItem = await orderItemRepo.GetAsync(o => o.Id == item.Id);
             orderItem.OrderId = createdOrder.Id;
             await orderItemRepo.UpdateAsync(orderItem);
-
-            totalPrice += item.Product.Price * item.Count;
         }
 
+        var cartEntity = await cartRepo.GetAsync(c => c.Id == user.CartId);
+        cartEntity.OrderItemIds = new List<long>();
+        await cartRepo.UpdateAsync(cartEntity);
+        
         await this.orderItemRepo.SaveChangesAsync();
 
         var mappedDto = new OrderViewDto
@@ -91,7 +92,7 @@ public class OrderService : IOrderService
             CreatedAt = createdOrder.CreatedAt,
             UserId = createdOrder.UserId,
             Payment = payment,
-            TotalPrice = totalPrice,
+            TotalPrice = cart.TotalPrice,
             Items = cart.Items
         };
 

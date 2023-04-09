@@ -9,11 +9,6 @@ namespace Shopee.Data.Repositories;
 public class UserRepository : IUserRepository
 {
     private ShopeDbContext context = new ShopeDbContext();
-    public UserRepostory()
-    {
-
-    }
-
     public async Task<User> CreateAsync(User user)
     {
         var userForInsert = await this.context.Users.AddAsync(user);

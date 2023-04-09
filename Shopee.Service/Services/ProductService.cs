@@ -25,7 +25,8 @@ public class ProductService : IProductService
             CategoryId = dto.CategoryId,
             Price = dto.Price,
             SearchTags = dto.SearchTags,
-            Count = dto.Count
+            Count = dto.Count,
+            PhotoUrl = dto.PhotoUrl
         };
 
         var addedModel = await productRepository.CreateAsync(mappedProduct);
@@ -41,6 +42,7 @@ public class ProductService : IProductService
             CreatedAt = addedModel.CreatedAt,
             UpdatedAt = addedModel.UpdatedAt,
             Id = addedModel.Id,
+            PhotoUrl = addedModel.PhotoUrl,
             CategoryName = (await categoryRepository
                 .GetAsync(u => u.Id == addedModel.CategoryId)).Name
         };
@@ -74,6 +76,7 @@ public class ProductService : IProductService
                 CreatedAt = item.CreatedAt,
                 UpdatedAt = item.UpdatedAt,
                 Id = item.Id,
+                PhotoUrl = item.PhotoUrl,
                 CategoryName = (await categoryRepository
                 .GetAsync(u => u.Id == item.CategoryId)).Name
             });
@@ -96,6 +99,7 @@ public class ProductService : IProductService
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
             Id = entity.Id,
+            PhotoUrl = entity.PhotoUrl,
             CategoryName = (await categoryRepository
                 .GetAsync(u => u.Id == entity.CategoryId)).Name
         };
@@ -114,6 +118,7 @@ public class ProductService : IProductService
         entity.CategoryId = dto.CategoryId;
         entity.Count = dto.Count;
         entity.SearchTags = dto.SearchTags;
+        entity.PhotoUrl = dto.PhotoUrl;
 
         var updatedEntity = await productRepository.UpdateAsync(entity);
 
@@ -129,6 +134,7 @@ public class ProductService : IProductService
             CreatedAt = updatedEntity.CreatedAt,
             UpdatedAt = updatedEntity.UpdatedAt,
             Id = updatedEntity.Id,
+            PhotoUrl = updatedEntity.PhotoUrl,
             CategoryName = (await categoryRepository
                 .GetAsync(u => u.Id == updatedEntity.CategoryId)).Name
         }; ;

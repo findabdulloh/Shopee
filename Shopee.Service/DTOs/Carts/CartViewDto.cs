@@ -6,5 +6,5 @@ namespace Shopee.Service.DTOs.Carts;
 public class CartViewDto : Auditable
 {
     public List<OrderItemViewDto> Items { get; set; }
-    public decimal Amount { get; set; }
+    public decimal TotalPrice { get; set; }
 }

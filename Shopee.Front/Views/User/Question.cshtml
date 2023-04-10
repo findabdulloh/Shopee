@@ -1,0 +1,37 @@
+﻿@using Shopee.Domain.Enums;
+@{
+}
+
+@model List<Message>
+
+<h1 class="text-center">Answers</h1>
+
+<a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="User" asp-action="MessageCreate">Create</a>
+
+<div class="container container-fluid d-flex  flex-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Text</th>
+                <th scope="col">User id</th>
+                <th scope="col">Created At</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                @if(message.Type == MessageType.Answer)
+                {
+                    <tr>
+                        <th scope="row">@message.Id</th>
+                        <td>@message.Text</td>
+                        <td>@message.UserId</td>
+                        <td>@message.CreatedAt</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

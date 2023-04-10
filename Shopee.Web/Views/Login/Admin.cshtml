@@ -1,0 +1,8 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model Tuple<string, string>
+<div class="text-center">
+    <h1 class="display-4">Welcome to Admin page dear @Model.Item1</h1>
+    <p>Your password @Model.Item2</p>
+</div>

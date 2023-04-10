@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopee.Web", "Shopee.Web\Shopee.Web.csproj", "{3DCD11D9-3687-4AAC-B257-3793B9D00141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Data", "Shopee.Data\Shopee.Data.csproj", "{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Domain", "Shopee.Domain\Shopee.Domain.csproj", "{1366E369-0AFD-4D6A-A9DD-D223B5253978}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Service", "Shopee.Service\Shopee.Service.csproj", "{866C2E4F-027F-445E-BBA0-AACE3DE21702}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Presentation", "Shopee.Presentation\Shopee.Presentation.csproj", "{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Web", "Shopee.Front\Shopee.Web.csproj", "{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +19,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DCD11D9-3687-4AAC-B257-3793B9D00141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEF81B8D-BDC9-4187-A15E-75BE60DDE0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1366E369-0AFD-4D6A-A9DD-D223B5253978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{866C2E4F-027F-445E-BBA0-AACE3DE21702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shopee.Domain\Shopee.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

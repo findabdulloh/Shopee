@@ -1,11 +1,12 @@
-﻿@using Shopee.Service.DTOs.OrderItems;
+﻿@using Shopee.Service.DTOs.Carts;
+@using Shopee.Service.DTOs.OrderItems;
 @{
 
 }
-@model Tuple<List<OrderItemViewDto>, decimal>
+@model Tuple<CartViewDto, decimal>
 
 <div class="container container-fluid d-flex  flex-wrap">
-    @foreach (var product in Model.Item1)
+    @foreach (var product in Model.Item1.Items)
     {
         <div class="card" style="width: 18rem; margin: 20px 65px; padding:10px ; border-radius:20px; border: 1px solid #776BCC;">
             <img src="@product.Product.PhotoUrl" style="border-radius:20px;" class="card-img-top" alt="...">

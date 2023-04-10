@@ -56,7 +56,7 @@ public class OrderService : IOrderService
         if (user is null)
             return null;
 
-        var cart = await cartService.GetByIdAsync(user.CartId);
+        var cart = await cartService.GetByUserIdAsync(user.CartId);
         foreach (var item in cart.Items)
             if (item.Count > item.Product.Count)
                 return null;

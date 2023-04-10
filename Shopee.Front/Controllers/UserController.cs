@@ -5,6 +5,7 @@ using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
+using Shopee.Service.DTOs.Carts;
 using Shopee.Service.DTOs.Messages;
 using Shopee.Service.DTOs.OrderItems;
 using Shopee.Service.DTOs.Orders;
@@ -31,21 +32,13 @@ namespace Shopee.Web.Controllers
         }
         public async Task<IActionResult> Cart()
         {
-            var carts = await this.cartService.GetAllAsync();
-            List<OrderItemViewDto> orders = new List<OrderItemViewDto>();
+            var userJson = Request.Cookies["account"];
+            var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+            var carts = await this.cartService.GetByUserIdAsync(user.Id);
             decimal totalPrice = 0;
-            foreach (var item in carts)
-            {
-                OrderItemViewDto orderItem = new OrderItemViewDto();
-                orderItem = await this.ItemService.GetByIdAsync(item.Id);
-            
-                if (orderItem is not null)
-                {
-                    orders.Add(orderItem);
-                    totalPrice += orderItem.TotalPrice;
-                }
-            }
-            return View(new Tuple<List<OrderItemViewDto>, decimal>(orders, totalPrice));
+            foreach (var item in carts.Items)
+                totalPrice += item.TotalPrice;
+            return View(new Tuple<CartViewDto, decimal>(carts, totalPrice));
         }
         public async Task<IActionResult> OrderCart()
         {

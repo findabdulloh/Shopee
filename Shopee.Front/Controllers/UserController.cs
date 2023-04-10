@@ -47,9 +47,8 @@ namespace Shopee.Web.Controllers
 
         public async Task<IActionResult> OrderCreate(PaymentCreationDto payment)
         {
-			var userJson = Request.Cookies["account"];
-			var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
-            payment.OrderId = 1;
+            var userJson = Request.Cookies["account"];
+            var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
             var newOrder = new OrderCreationDto()
             {
                 UserId = user.Id,
@@ -57,10 +56,10 @@ namespace Shopee.Web.Controllers
             };
             await this.orderService.CreateAsync(newOrder);
             return RedirectToAction("Cart");
-		}
+        }
 
 
-		public IActionResult Account()
+        public IActionResult Account()
         {
             var userJson = Request.Cookies["account"];
             if (userJson != null)

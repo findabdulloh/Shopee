@@ -4,7 +4,7 @@
 }
 
 @model List<OrderViewDto>
-<h1 class="text-center">Categories</h1>
+<h1 class="text-center">Orders</h1>
 
 @*<div class="container d-flex justify-content-between pt-5">
     <form class="container" method="get" action="@Url.Action("ProductSearched", "Admin")">
@@ -31,7 +31,7 @@
             {
                 <tr>
                     <th scope="row">@product.Id</th>
-                    <td>@product.Payment</td>
+                    <td>@product.Payment.Type</td>
                     <td>@product.TotalPrice</td>
                     <td>@product.Status</td>
                     <td class="d-flex justify-content-around">

@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "adminlayout";
+}
+
+@model UserViewDto
+
+<div style="height: 100vh">
+    <div style="margin-top:150px;" class="container">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="">
+                <div class="card mb-3" style="border-radius: .5rem; border:2px solid #776BCC">
+                        <div class="g-0">
+                            <div  class="gradient-custom text-center text-white" style="height:300px; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                <img src="@Model.ProfilePhotoUrl" alt="Avatar" class="img-fluid my-5" style="width: 300px; border-radius: 100%;" />
+                            </div>
+                            <div style="padding:50px 0px 50px 0px" class="text-center container">
+                                <h1 style="padding:20px;">@Model.FirstName @Model.LastName</h1>
+                                <p><span style="font-weight: bold;">Username: </span>@Model.UserName</p>
+                                <p><span style="font-weight: bold;">Email: </span>@Model.Email</p>
+                                <p><span style="font-weight: bold;">Phone: </span>@Model.Phone</p>
+                                <p><span style="font-weight: bold;">Role: </span>@Model.Role</p>
+                                <a style="background-color: red; width:200px; color: #fff; padding: 5px 15px; border: 1px solid red; border-radius: 10px; margin-left: 520px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Login" asp-action="Index">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<style>
+    .gradient-custom {
+        background: #776BCC;
+        background: -webkit-linear-gradient(to right bottom, rgba(119,107,204,1), rgba(100,70,190,1));
+        background: linear-gradient(to right bottom, rgba(119,107,204, 1), rgba(100,70,190, 1))
+    }
+</style>

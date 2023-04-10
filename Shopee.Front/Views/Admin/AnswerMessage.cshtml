@@ -1,0 +1,24 @@
+﻿@using Shopee.Service.DTOs.Messages;
+@{
+	Layout = "adminlayout";
+}
+
+<a style="width:100px; margin-left:600px; border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " class="text-center nav-link text-ligth" asp-area="" asp-controller="Admin" asp-action="Questions">Back</a>
+
+<h1>Message send</h1>
+@model MessageCreationDto
+
+<div class="screen__content">
+	<form class="login" method="post" asp-controller="Admin" asp-action="SendMessage">
+		<div class="login__field">
+			<input asp-for="Text" type="text" class="login__input" placeholder="Text">
+		</div>
+		<button class="button login__submit" style="margin-bottom: 20px;">
+			<span class="button__text">Log In</span>
+		</button>
+
+		<div class="container d-flex justify-content-between">
+			<button style="margin: 20px 20px; width:100px; color: #fff; background-color: #111;" type="submit">Create</button>
+		</div>
+	</form>
+</div>

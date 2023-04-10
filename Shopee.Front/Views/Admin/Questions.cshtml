@@ -1,0 +1,38 @@
+﻿@using Shopee.Domain.Enums;
+@{
+    Layout = "adminlayout";
+}
+
+@model List<Message>
+<h1 class="text-center">Questions</h1>
+
+<div class="container container-fluid d-flex  flex-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Text</th>
+                <th scope="col">User id</th>
+                <th scope="col">Created At</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                @if(message.Type == MessageType.Question)
+                {
+                    <tr>
+                        <th scope="row">@message.Id</th>
+                        <td>@message.Text</td>
+                        <td>@message.UserId</td>
+                        <td>@message.CreatedAt</td>
+                        <td class="d-flex justify-content-around">
+                            <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("AnswerMessage","Admin", new {Id = message.Id, userId = message.UserId})">Answer</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

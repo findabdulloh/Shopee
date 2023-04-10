@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "adminlayout";
+}
+
+@model ProductCreationDto
+
+<h1 class="text-center">Update product @ViewBag.id</h1>
+
+<div class="container">
+
+    <form method="post" asp-controller="Admin" asp-action="UpdateProductService">
+        <div>
+            <label class="form-label">Id</label>
+            <input class="form-control" name="id" value="@ViewBag.id"/>
+        </div>
+        <div>
+            <label class="form-label" asp-for="Name">Name</label>
+            <input class="form-control" asp-for="Name" Name" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="Price">Price</label>
+            <input class="form-control" asp-for="Price" Price" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="Count">Count</label>
+            <input class="form-control" asp-for="Count" Count" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="Description">Description</label>
+            <input class="form-control" asp-for="Description" Description" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="SearchTags">SearchTags</label>
+            <input class="form-control" asp-for="SearchTags" SearchTags" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="CategoryId">CategoryId</label>
+            <input class="form-control" asp-for="CategoryId" CategoryId" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="PhotoUrl">PhotoUrl</label>
+            <input class="form-control" asp-for="PhotoUrl" PhotoUrl" />
+        </div>
+        <div class="container d-flex justify-content-between">
+            <button style="margin: 20px 20px; width:100px; color: #fff; background-color: #111;" type="submit">Create</button>
+            <a class="nav-link btn" style="margin: 20px 20px; width:100px; background-color: #777; color: #111;" href="@Url.Action("Product", "Admin")">Back</a>
+        </div>
+    </form>
+</div>

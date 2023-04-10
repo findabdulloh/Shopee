@@ -8,5 +8,5 @@ public class UserCreationDto
     public string Phone { get; set; } 
     public string Email { get; set; } 
     public string Password { get; set; }
-    public string ProfilePhotoUrl { get; set; }
+    public string ProfilePhotoUrl { get; set; } = "https://i.stack.imgur.com/34AD2.jpg";
 }

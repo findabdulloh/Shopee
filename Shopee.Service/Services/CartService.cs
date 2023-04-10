@@ -50,11 +50,16 @@ public class CartService : ICartService
 
     public async Task<CartViewDto> CreateAsync(CartCreationDto dto)
     {
+        var user = await userRepo.GetAsync(u => u.Id == dto.UserId);
+
         var createdEntity = await cartRepo.CreateAsync(new Cart
         {
             OrderItemIds = new List<long>(),
             CreatedAt = DateTime.UtcNow
         });
+        user.CartId = createdEntity.Id;
+
+        await userRepo.SaveChangesAsync();
 
         return new CartViewDto
         {

@@ -25,9 +25,10 @@ public class ProductService : IProductService
             CategoryId = dto.CategoryId,
             Price = dto.Price,
             SearchTags = dto.SearchTags,
-            Count = dto.Count,
-            PhotoUrl = dto.PhotoUrl
+            Count = dto.Count
         };
+        if (dto.PhotoUrl is not null)
+            mappedProduct.PhotoUrl = dto.PhotoUrl;
 
         var addedModel = await productRepository.CreateAsync(mappedProduct);
 

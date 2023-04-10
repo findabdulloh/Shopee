@@ -21,7 +21,7 @@
                 <p class="card-text"><span style="font-weight:bold">Count:</span> @product.Count</p>
                 <p class="card-text"><span style="font-weight:bold">Description:</span> @product.Description</p>
             </div>
-            <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateProduct","Admin", new {Id = product.Id})">Add to cart</a>
+            <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("AddToCard","User", new {Id = product.Id})">Add to cart</a>
         </div>
     }
 </div>

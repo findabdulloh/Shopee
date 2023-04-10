@@ -26,7 +26,7 @@ public class OrderService : IOrderService
         if (entity is null) return null;
 
         entity.Status = newStatus;
-        entity.UpdatedAt = DateTime.Now;
+        entity.UpdatedAt = DateTime.UtcNow;
 
         await this.orderRepo.UpdateAsync(entity);
 

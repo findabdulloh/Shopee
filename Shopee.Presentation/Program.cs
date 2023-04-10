@@ -11,6 +11,9 @@ using System.Runtime.CompilerServices;
 using Shopee.Service.DTOs;
 using Shopee.Service.DTOs.Carts;
 using Shopee.Service.DTOs.Products;
+using Shopee.Service.DTOs.OrderItems;
+using Shopee.Service.DTOs.Orders;
+using Shopee.Service.DTOs.Payments;
 
 namespace Shopee;
 
@@ -23,6 +26,7 @@ class Program
         IUserService user = new UserService();
         ICartService cart = new CartService();
         IProductService productSer = new ProductService();
+        IOrderService orderSer = new OrderService();
 
         var users = new List<UserCreationDto>()
         {
@@ -185,18 +189,60 @@ class Program
             Price = 19999,
         });
 
-        var newCart = await cart.GetByUserIdAsync(1);
-        foreach (var item in await cart.GetAllAsync())
+        //await user.CreateAsync(new UserCreationDto
+        //{
+        //    Email = "1",
+        //    FirstName = "1",
+        //    LastName = "1",
+        //    Password = "1",
+        //    Phone = "1",
+        //    UserName = "1",
+        //});
+        //await cart.AddItemAsync(5, new OrderItemCreationDto
+        //{
+        //    Count = 7,
+        //    ProductId = 1,
+        //});
+        var order = await orderSer.CreateAsync(new OrderCreationDto
         {
-            Console.WriteLine(item.TotalPrice);
+            UserId = 5,
+            Payment = new PaymentCreationDto
+            {
+                Type = PaymentType.Click,
+                UserId = 5
+            }
+        });
+
+        Console.WriteLine("Orders:");
+        foreach (var item in await orderSer.GetAllAsync(o => true))
+        {
+            Console.WriteLine(item.Id);
+            Console.WriteLine("UserId:" + item.UserId);
+            foreach (var i in item.Items)
+            {
+                Console.WriteLine(i.Product.Name);
+            }
         }
 
-        Console.WriteLine(product?.Name);
-        Console.WriteLine(newCart?.TotalPrice);
+        Console.WriteLine("Products:");
+        foreach (var item in await productSer.GetAllAsync())
+        {
+            Console.WriteLine(item.Id);
+            Console.WriteLine(item.Name);
+        }
+        Console.WriteLine("\nUsers:");
         var userss = await user.GetAllAsync();
         foreach (var item in userss)
         {
+            Console.WriteLine(item.Id);
             Console.WriteLine(item.FirstName + " " + item.Role);
+            var userCart = await cart.GetByUserIdAsync(item.Id);
+            if (userCart != null)
+            {
+                Console.WriteLine(userCart.Id);
+                userCart.Items.ForEach(o => Console.WriteLine(o.Product.Name));
+            }
+            Console.WriteLine();
         }
     }
 }

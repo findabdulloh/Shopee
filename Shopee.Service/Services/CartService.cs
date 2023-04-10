@@ -31,8 +31,12 @@ public class CartService : ICartService
         await cartRepo.UpdateAsync(cart);
         await cartRepo.SaveChangesAsync();
 
-        var cartItems = await orderItemService
-            .GetAllAsync(o => cart.OrderItemIds.Contains(o.Id));
+        var cartItems = new List<OrderItemViewDto>();
+
+        foreach (var item in cart.OrderItemIds)
+        {
+            cartItems.Add(await orderItemService.GetByIdAsync(item));
+        }
 
         var totalPrice = 0m;
         foreach (var item in cartItems)
@@ -48,13 +52,15 @@ public class CartService : ICartService
         };
     }
 
-    public async Task<CartViewDto> CreateAsync(CartCreationDto dto)
+    public async Task<CartViewDto> CreateAsync()
     {
         var createdEntity = await cartRepo.CreateAsync(new Cart
         {
             OrderItemIds = new List<long>(),
             CreatedAt = DateTime.UtcNow
         });
+
+        await cartRepo.SaveChangesAsync();
 
         return new CartViewDto
         {
@@ -95,10 +101,15 @@ public class CartService : ICartService
 
         await cartRepo.UpdateAsync(cart);
         await orderItemService.DeleteAsync(itemId);
+        
         await cartRepo.SaveChangesAsync();
 
-        var cartItems = await orderItemService
-            .GetAllAsync(o => cart.OrderItemIds.Contains(o.Id));
+        var cartItems = new List<OrderItemViewDto>();
+
+        foreach (var item in cart.OrderItemIds)
+        {
+            cartItems.Add(await orderItemService.GetByIdAsync(item));
+        }
 
         var totalPrice = 0m;
         foreach (var item in cartItems)
@@ -120,8 +131,13 @@ public class CartService : ICartService
 
         foreach (var item in await cartRepo.GetAllASync())
         {
-            var cartItems = await orderItemService
-                .GetAllAsync(o => item.OrderItemIds.Contains(o.Id));
+            var cartItems = new List<OrderItemViewDto>();
+
+            foreach (var i in item.OrderItemIds)
+            {
+                cartItems.Add(await orderItemService.GetByIdAsync(i));
+            }
+
             var totalPrice = 0m;
             foreach (var i in cartItems)
                 totalPrice += i.TotalPrice;
@@ -146,8 +162,13 @@ public class CartService : ICartService
         var entity = await cartRepo.GetAsync(o => o.Id == user.CartId);
         if (entity is null) return null;
 
-        var cartItems = await orderItemService
-            .GetAllAsync(o => entity.OrderItemIds.Contains(o.Id));
+        var cartItems = new List<OrderItemViewDto>();
+
+        foreach (var item in entity.OrderItemIds)
+        {
+            cartItems.Add(await orderItemService.GetByIdAsync(item));
+        }
+
         var totalPrice = 0m;
         foreach (var i in cartItems)
             totalPrice += i.TotalPrice;

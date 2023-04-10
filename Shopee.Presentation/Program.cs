@@ -186,6 +186,10 @@ class Program
         });
 
         var newCart = await cart.GetByUserIdAsync(1);
+        foreach (var item in await cart.GetAllAsync())
+        {
+            Console.WriteLine(item.TotalPrice);
+        }
 
         Console.WriteLine(product?.Name);
         Console.WriteLine(newCart?.TotalPrice);

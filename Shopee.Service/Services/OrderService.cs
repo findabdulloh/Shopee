@@ -1,4 +1,4 @@
-﻿using Shopee.Data.IRepositories;
+using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
@@ -56,7 +56,7 @@ public class OrderService : IOrderService
         if (user is null)
             return null;
 
-        var cart = await cartService.GetByUserIdAsync(user.CartId);
+        var cart = await cartService.GetByUserIdAsync(user.Id);
         foreach (var item in cart.Items)
             if (item.Count > item.Product.Count)
                 return null;

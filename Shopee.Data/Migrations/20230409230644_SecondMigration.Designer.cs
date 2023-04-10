@@ -13,8 +13,8 @@ using Shopee.Data.DbContexts;
 namespace Shopee.Data.Migrations
 {
     [DbContext(typeof(ShopeDbContext))]
-    [Migration("20230409120504_f2")]
-    partial class f2
+    [Migration("20230409230644_SecondMigration")]
+    partial class SecondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -209,6 +209,9 @@ namespace Shopee.Data.Migrations
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("ProfilePhotoUrl")
+                        .HasColumnType("text");
 
                     b.Property<byte>("Type")
                         .HasColumnType("smallint");

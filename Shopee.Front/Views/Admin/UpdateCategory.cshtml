@@ -1,0 +1,30 @@
+﻿@using Shopee.Service.DTOs.Categories;
+@{
+    Layout = "adminlayout";
+}
+
+@model CategoryCreationDto
+
+<h1 class="text-center">Update category @ViewBag.idcategory</h1>
+
+<div class="container">
+
+    <form method="post" asp-controller="Admin" asp-action="UpdateCategoryEnd">
+        <div>
+            <label class="form-label">Id</label>
+            <input class="form-control" name="id" value="@ViewBag.idcategory" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="Name">Name</label>
+            <input class="form-control" asp-for="Name" Name" />
+        </div>
+        <div>
+            <label class="form-label" asp-for="Description">Description</label>
+            <input class="form-control" asp-for="Description" Description" />
+        </div>
+        <div class="container d-flex justify-content-between">
+            <button style="margin: 20px 20px; width:100px; color: #fff; background-color: #111;" type="submit">Create</button>
+            <a class="nav-link btn" style="margin: 20px 20px; width:100px; background-color: #777; color: #111;" href="@Url.Action("Category", "Admin")">Back</a>
+        </div>
+    </form>
+</div>

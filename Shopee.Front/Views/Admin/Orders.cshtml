@@ -22,6 +22,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Payment</th>
                 <th scope="col">TotalPrice</th>
+                <th scope="col">Status</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -32,9 +33,9 @@
                     <th scope="row">@product.Id</th>
                     <td>@product.Payment</td>
                     <td>@product.TotalPrice</td>
+                    <td>@product.Status</td>
                     <td class="d-flex justify-content-around">
-                        <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateCategory","Admin", new {Id = product.Id})">Edit</a>
-                        <a class="nav-link btn" style="background-color: red; border-radius:20px; color: #fff;" href="@Url.Action("DeleteCategory", "Admin" , new {Id = product.Id})">Delete</a>
+                        <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("OrderChangeStatus","Admin", new {Id = product.Id})">Change status</a>
                     </td>
                 </tr>
             }

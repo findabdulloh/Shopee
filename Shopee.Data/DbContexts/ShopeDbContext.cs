@@ -17,6 +17,6 @@ public class ShopeDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Server=localhost; Database=ShopeMVC; User Id=postgres; password=admin");
+        optionsBuilder.UseNpgsql("Server=localhost; Database=ShopeMVC; User Id=postgres; password=komronbek26");
     }
 }

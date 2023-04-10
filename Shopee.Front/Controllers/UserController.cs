@@ -45,22 +45,32 @@ namespace Shopee.Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> RemoveFromCart(long id)
+        {
+            var userJson = Request.Cookies["account"];
+            var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+            var remove = await this.cartService.DropItemAsync(user.Id, id);
+            return RedirectToAction("Cart");
+        }
         public async Task<IActionResult> OrderCreate(PaymentCreationDto payment)
         {
-			var userJson = Request.Cookies["account"];
-			var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
-            payment.OrderId = 1;
+            var userJson = Request.Cookies["account"];
+            var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
             var newOrder = new OrderCreationDto()
             {
                 UserId = user.Id,
-                Payment = payment,
+                Payment = new PaymentCreationDto()
+                {
+                    Type = payment.Type,
+                    UserId = user.Id
+                },
             };
             await this.orderService.CreateAsync(newOrder);
             return RedirectToAction("Cart");
-		}
+        }
 
 
-		public IActionResult Account()
+        public IActionResult Account()
         {
             var userJson = Request.Cookies["account"];
             if (userJson != null)

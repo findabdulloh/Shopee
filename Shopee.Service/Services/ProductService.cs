@@ -10,7 +10,8 @@ public class ProductService : IProductService
 {
     private IProductRepository productRepository = new ProductRepository();
     private ICategoryRepository categoryRepository = new CategoryRepository();
-    public async Task<ProductViewDto> CreateAsync(ProductCreationDto dto)
+
+	public async Task<ProductViewDto> CreateAsync(ProductCreationDto dto)
     {
         var entity = await productRepository.GetAsync(u => u.Name == dto.Name);
 
@@ -44,7 +45,7 @@ public class ProductService : IProductService
             Id = addedModel.Id,
             PhotoUrl = addedModel.PhotoUrl,
             CategoryName = (await categoryRepository
-                .GetAsync(u => u.Id == addedModel.CategoryId)).Name
+                .GetAsync(u => u.Id == addedModel.CategoryId))?.Name
         };
     }
 
@@ -78,7 +79,7 @@ public class ProductService : IProductService
                 Id = item.Id,
                 PhotoUrl = item.PhotoUrl,
                 CategoryName = (await categoryRepository
-                .GetAsync(u => u.Id == item.CategoryId)).Name
+                .GetAsync(u => u.Id == item.CategoryId))?.Name
             });
         }
 
@@ -101,7 +102,7 @@ public class ProductService : IProductService
             Id = entity.Id,
             PhotoUrl = entity.PhotoUrl,
             CategoryName = (await categoryRepository
-                .GetAsync(u => u.Id == entity.CategoryId)).Name
+                .GetAsync(u => u.Id == entity.CategoryId))?.Name
         };
     }
 
@@ -136,7 +137,7 @@ public class ProductService : IProductService
             Id = updatedEntity.Id,
             PhotoUrl = updatedEntity.PhotoUrl,
             CategoryName = (await categoryRepository
-                .GetAsync(u => u.Id == updatedEntity.CategoryId)).Name
+                .GetAsync(u => u.Id == updatedEntity.CategoryId))?.Name
         }; ;
     }
 }

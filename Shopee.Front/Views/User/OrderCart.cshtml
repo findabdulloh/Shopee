@@ -1,0 +1,21 @@
+﻿@using Shopee.Service.DTOs.Orders;
+@using Shopee.Service.DTOs.Payments;
+@{
+}
+
+@model PaymentCreationDto
+
+<h1>Payment Create</h1>
+
+
+<div class="screen__content">
+	<form class="login" method="post" asp-controller="User" asp-action="OrderCreate">
+		<div class="login__field">
+			<label class="form-label" asp-for="Type">Cash, Click or Payme</label>
+			<input asp-for="Type" type="text" class="login__input" placeholder="Type">
+		</div>
+		<div class="container d-flex justify-content-between">
+			<button style="margin: 20px 20px; width:100px; color: #fff; background-color: #111;" type="submit">Create</button>
+		</div>
+	</form>
+</div>

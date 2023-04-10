@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json;
+@using Shopee.Service.DTOs.Categories;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,23 +11,20 @@
     <link rel="stylesheet" href="~/Shopee.Front.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+    <header >
+        <nav style="background-color: #776BCC;" class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class=" container-fluid container ">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul style="margin-left:420px; color:#fff;" class="navbar-nav flex-grow-1">
+                    <ul style="margin-left:500px; color:#fff;" class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Index">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Categories</a>
+                            <a class="nav-link text-ligth" asp-area="" asp-controller="User" asp-action="Products">Products</a>
                         </li>
                     </ul>
                 </div>
-                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Cart</a>
-                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Give Questiong</a>
-                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="Home" asp-action="Privacy">Accaunt</a>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="User" asp-action="Cart">Cart</a>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="User" asp-action="Question">Give Question</a>
+                <a style="color:aliceblue;" class="nav-link text-ligth" asp-area="" asp-controller="User" asp-action="Account">Account</a>
             </div>
         </nav>
     </header>

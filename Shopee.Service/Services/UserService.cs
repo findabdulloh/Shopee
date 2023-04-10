@@ -3,6 +3,7 @@ using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
 using Shopee.Service.DTOs;
+using Shopee.Service.DTOs.Carts;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
 
@@ -11,6 +12,7 @@ namespace Shopee.Service.Services;
 public class UserService : IUserService
 {
     IUserRepository repostory = new UserRepository();
+    ICartService cartService = new CartService();
     public async Task<UserViewDto> CreateAsync(UserCreationDto dto)
     {
         var userExist = await this.repostory.GetAsync(u=>u.UserName == dto.UserName || u.Email == dto.Email);
@@ -19,7 +21,7 @@ public class UserService : IUserService
             return null;
         }
 
-        var mappedUser = new User()
+		var mappedUser = new User()
         {
             FirstName = dto.FirstName,
             LastName = dto.LastName,
@@ -30,8 +32,28 @@ public class UserService : IUserService
             UserRole = UserRole.Customer,
             ProfilePhotoUrl = dto.ProfilePhotoUrl
         };
+		var cart = new CartCreationDto()
+		{
+			UserId = mappedUser.Id,
+		};
 
-        await this.repostory.CreateAsync(mappedUser);
+		var result = await this.cartService.CreateAsync(cart);
+
+
+		var newUser = new User()
+		{
+            CartId = result.Id,
+			FirstName = dto.FirstName,
+			LastName = dto.LastName,
+			Email = dto.Email,
+			UserName = dto.UserName,
+			Password = dto.Password,
+			Phone = dto.Phone,
+			UserRole = UserRole.Customer,
+			ProfilePhotoUrl = dto.ProfilePhotoUrl
+		};
+
+		await this.repostory.CreateAsync(newUser);
 
         var userForResult = new UserViewDto()
         {
@@ -44,10 +66,15 @@ public class UserService : IUserService
             Role = mappedUser.UserRole,
             CreatedAt = mappedUser.CreatedAt,
             UpdatedAt = mappedUser.UpdatedAt,
-            ProfilePhotoUrl = mappedUser.ProfilePhotoUrl
+            ProfilePhotoUrl = mappedUser.ProfilePhotoUrl,
         };
 
-        await this.repostory.SaveChangesAsync();
+        
+        
+
+
+
+		await this.repostory.SaveChangesAsync();
         return userForResult;
     }
 

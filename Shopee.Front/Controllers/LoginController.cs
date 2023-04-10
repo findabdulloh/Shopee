@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
@@ -11,8 +12,7 @@ namespace Shopee.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private static IUserRepostory repo = new UserRepostory();
-        private IUserService userservice = new UserService(repo);
+        private IUserService userservice = new UserService();
         public IActionResult Index()
         {
             ViewData["Title"] = "Login";
@@ -25,23 +25,14 @@ namespace Shopee.Web.Controllers
             var userChech = await this.userservice.LoginAsync(user.UserName, user.Password);
             if(userChech is not null)
             {
-                if(userChech.Role == UserRole.Admin)
+                Response.Cookies.Append("account", JsonConvert.SerializeObject(userChech));
+                if (userChech.Role == UserRole.Admin)
                     return View("Admin", userChech);
             
                 if(userChech.Role == UserRole.Customer)
                     return View("User", userChech);
             }
             return BadRequest("User is not found");
-        }
-
-        public IActionResult Admin(UserViewDto user)
-        {
-            return View("/Views/Admin/Index.cshtml", user);
-        }
-
-        public IActionResult User(UserViewDto user)
-        {
-            return RedirectToAction("Index", "User", user);
         }
     }
 }

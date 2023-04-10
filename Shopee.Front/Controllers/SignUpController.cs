@@ -9,8 +9,7 @@ namespace Shopee.Web.Controllers
 {
 	public class SignUpController : Controller
 	{
-		private static IUserRepostory repo = new UserRepostory();
-		private IUserService userservice = new UserService(repo);
+		private IUserService userservice = new UserService();
 		public IActionResult Index()
 		{
 			ViewData["Title"] = "Login";

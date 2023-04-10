@@ -139,9 +139,11 @@ public class CartService : ICartService
         return mappedDtos;
     }
 
-    public async Task<CartViewDto> GetByIdAsync(long id)
+    public async Task<CartViewDto> GetByUserIdAsync(long userId)
     {
-        var entity = await cartRepo.GetAsync(o => o.Id == id);
+        var user = await userRepo.GetAsync(u => u.Id == userId);
+
+        var entity = await cartRepo.GetAsync(o => o.Id == user.CartId);
         if (entity is null) return null;
 
         var cartItems = await orderItemService

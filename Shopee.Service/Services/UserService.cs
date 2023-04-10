@@ -149,6 +149,7 @@ public class UserService : IUserService
         userForUpdate.Password = dto.Password;
         userForUpdate.UserName = dto.UserName;
         userForUpdate.ProfilePhotoUrl = dto.ProfilePhotoUrl;
+        userForUpdate.UpdatedAt = DateTime.UtcNow;
 
         await this.repostory.UpdateAsync(userForUpdate);
 

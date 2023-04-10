@@ -19,7 +19,8 @@ public class AddressService : IAddressService
             Neighborhood = dto.Neighborhood,
             HouseNumber = dto.HouseNumber,
             DoorNumber = dto.DoorNumber,
-            UserId = dto.UserId
+            UserId = dto.UserId,
+            CreatedAt = DateTime.UtcNow,
         };
 
         var insertedEntity = await this.addressRepository.CreateAsync(mappedEntity);

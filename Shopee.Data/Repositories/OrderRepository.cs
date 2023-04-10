@@ -2,6 +2,7 @@
 using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
@@ -23,7 +24,8 @@ public class OrderRepository : IOrderRepository
     }
 
     public async Task<List<Order>> GetAllASync(Expression<Func<Order, bool>> expression = null)
-        => await this.context.Orders.ToListAsync();
+        => expression is null ? await context.Orders.ToListAsync()
+            : await this.context.Orders.Where(expression).ToListAsync();
 
     public async Task<Order> GetAsync(Expression<Func<Order, bool>> expression)
     => await this.context.Orders.FirstOrDefaultAsync(expression);

@@ -2,6 +2,7 @@
 using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Shopee.Data.Repositories;
@@ -34,7 +35,8 @@ public class AddressRepository : IAddressRepository
     }
 
     public async Task<List<Address>> GetAllASync(Expression<Func<Address, bool>> expression)
-        => await this.context.Addresses.ToListAsync();
+        => expression is null ? await context.Addresses.ToListAsync()
+            : await this.context.Addresses.Where(expression).ToListAsync();
 
     public async Task<bool> SaveChangesAsync()
             => 0 < (await context.SaveChangesAsync());

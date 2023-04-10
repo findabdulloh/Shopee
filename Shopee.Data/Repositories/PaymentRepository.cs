@@ -2,6 +2,7 @@
 using Shopee.Data.DbContexts;
 using Shopee.Data.IRepositories;
 using Shopee.Domain.Entities;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 
@@ -24,7 +25,8 @@ public class PaymentRepository : IPaymentRepository
     }
 
     public async Task<List<Payment>> GetAllASync(Expression<Func<Payment, bool>> expression = null)
-        => await this.context.Payments.ToListAsync();
+        => expression is null ? await context.Payments.ToListAsync()
+            : await this.context.Payments.Where(expression).ToListAsync();
 
     public async Task<Payment> GetAsync(Expression<Func<Payment, bool>> expression)
     => await this.context.Payments.FirstOrDefaultAsync(expression);

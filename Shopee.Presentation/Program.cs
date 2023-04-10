@@ -27,6 +27,9 @@ class Program
         ICartService cart = new CartService();
         IProductService productSer = new ProductService();
         IOrderService orderSer = new OrderService();
+        var orderItemSer = new OrderItemService();
+        var orderItemRepo = new OrderItemRepository();
+
 
         var users = new List<UserCreationDto>()
         {
@@ -198,11 +201,13 @@ class Program
         //    Phone = "1",
         //    UserName = "1",
         //});
-        //await cart.AddItemAsync(5, new OrderItemCreationDto
-        //{
-        //    Count = 7,
-        //    ProductId = 1,
-        //});
+        await cart.AddItemAsync(5, new OrderItemCreationDto
+        {
+            Count = 99,
+            ProductId = 1,
+        });
+        var cartUser = await cart.GetByUserIdAsync(5);
+        Console.WriteLine(cartUser.Items.Count);
         var order = await orderSer.CreateAsync(new OrderCreationDto
         {
             UserId = 5,
@@ -213,9 +218,12 @@ class Program
             }
         });
 
-        Console.WriteLine("Orders:");
-        foreach (var item in await orderSer.GetAllAsync(o => true))
+        var orders = await orderSer.GetAllAsync(o => true);
+        Console.WriteLine($"Orders:{orders.Count}");
+        foreach (var item in orders)
         {
+            if (item.Id < orders.Count - 2)
+                continue;
             Console.WriteLine(item.Id);
             Console.WriteLine("UserId:" + item.UserId);
             foreach (var i in item.Items)
@@ -223,6 +231,7 @@ class Program
                 Console.WriteLine(i.Product.Name);
             }
         }
+        Console.WriteLine((await orderSer.GetByIdAsync(9)).Items.Count);
 
         Console.WriteLine("Products:");
         foreach (var item in await productSer.GetAllAsync())
@@ -234,6 +243,7 @@ class Program
         var userss = await user.GetAllAsync();
         foreach (var item in userss)
         {
+            if (item.Id < userss.Count - 2)
             Console.WriteLine(item.Id);
             Console.WriteLine(item.FirstName + " " + item.Role);
             var userCart = await cart.GetByUserIdAsync(item.Id);
@@ -244,5 +254,7 @@ class Program
             }
             Console.WriteLine();
         }
+
+        (await orderItemRepo.GetAllASync()).ForEach(o => Console.WriteLine(o.OrderId));
     }
 }

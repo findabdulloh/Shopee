@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Service", "Shopee.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Presentation", "Shopee.Presentation\Shopee.Presentation.csproj", "{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopee.Web", "Shopee.Front\Shopee.Web.csproj", "{2603A9FA-B628-48CD-B6C0-662249F595FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopee.Web", "Shopee.Front\Shopee.Web.csproj", "{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10B6B37D-7C68-4C28-A0D7-3A8EBB76B7D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2603A9FA-B628-48CD-B6C0-662249F595FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2603A9FA-B628-48CD-B6C0-662249F595FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2603A9FA-B628-48CD-B6C0-662249F595FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2603A9FA-B628-48CD-B6C0-662249F595FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92AC1A0A-16AE-49AE-B0C2-6631A5CFCF57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

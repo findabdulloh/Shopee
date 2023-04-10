@@ -64,6 +64,7 @@ public class PaymentService : IPaymentService
         if(paymentForUpdate is null)
             return null;
 
+        paymentForUpdate.UpdatedAt = DateTime.UtcNow;
         await this.repostory.UpdateAsync(paymentForUpdate);
         await this.repostory.SaveChangesAsync();
         return paymentForUpdate;

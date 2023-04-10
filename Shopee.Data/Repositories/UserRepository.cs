@@ -25,7 +25,8 @@ public class UserRepository : IUserRepository
     }
 
     public async Task<List<User>> GetAllASync(Expression<Func<User, bool>> expression = null)
-        => await this.context.Users.ToListAsync();
+        => expression is null ? await context.Users.ToListAsync()
+            : await this.context.Users.Where(expression).ToListAsync();
 
     public async Task<User> GetAsync(Expression<Func<User, bool>> expression)
         => await this.context.Users.FirstOrDefaultAsync(expression);

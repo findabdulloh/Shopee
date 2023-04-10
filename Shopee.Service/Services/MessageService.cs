@@ -26,7 +26,8 @@ public class MessageService : IMessageService
         {
             Text = dto.Text,
             Type = dto.Type,
-            UserId = dto.UserId
+            UserId = dto.UserId,
+            CreatedAt = DateTime.UtcNow,
         });
 
         await this.messageRepo.SaveChangesAsync();

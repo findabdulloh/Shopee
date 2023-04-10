@@ -74,14 +74,16 @@ public class OrderService : IOrderService
             PaymentId = payment.Id
         });
 
+        var orderId = (long)(await orderRepo.GetAllASync()).Count + 1;
         foreach (var item in cart.Items)
         {
             var orderItem = await orderItemRepo.GetAsync(o => o.Id == item.Id);
-            orderItem.OrderId = createdOrder.Id;
+            orderItem.OrderId = orderId;
+            await orderItemRepo.UpdateAsync(orderItem);
+
             var product = await productRepo.GetAsync(p => p.Id == item.Product.Id);
             product.Count -= item.Count;
             await productRepo.UpdateAsync(product);
-            await orderItemRepo.UpdateAsync(orderItem);
         }
 
         var cartEntity = await cartRepo.GetAsync(c => c.Id == user.CartId);

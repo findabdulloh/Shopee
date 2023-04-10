@@ -11,22 +11,20 @@ public class PaymentService : IPaymentService
 {
     IPaymentRepository repostory = new PaymentRepository();
     IOrderItemService orderItemSer = new OrderItemService();
+    IUserRepository userRepo = new UserRepository();
+    ICartService cartService = new CartService(); 
 
     public async Task<Payment> CreateAsync(PaymentCreationDto dto)
     {
         decimal amount = 0;
-
-        foreach (var item in await orderItemSer.GetAllAsync(u => u.OrderId == dto.OrderId))
-        {
-            amount += item.TotalPrice;
-        }
+        var cart = await cartService.GetByUserIdAsync(dto.UserId);
 
         var payment = new Payment
         {
             Type = dto.Type,
             IsPaid = dto.Type != PaymentType.Cash,
             CreatedAt = DateTime.UtcNow,
-            Amount = amount
+            Amount = cart.TotalPrice
         };
 
         var insertedEntity = await repostory.CreateAsync(payment);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shopee.Data.DbContexts;
@@ -12,9 +13,10 @@ using Shopee.Data.DbContexts;
 namespace Shopee.Data.Migrations
 {
     [DbContext(typeof(ShopeDbContext))]
-    partial class ShopeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230410062555_ff")]
+    partial class ff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

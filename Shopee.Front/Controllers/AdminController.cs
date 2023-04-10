@@ -6,6 +6,7 @@ using Shopee.Domain.Entities;
 using Shopee.Domain.Enums;
 using Shopee.Service.DTOs.Categories;
 using Shopee.Service.DTOs.Messages;
+using Shopee.Service.DTOs.Orders;
 using Shopee.Service.DTOs.Products;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
@@ -83,6 +84,20 @@ namespace Shopee.Web.Controllers
 			return RedirectToAction("Questions");
 		}
 
+        public async Task<IActionResult> OrderChangeStatus(long id)
+        {
+            var order = await this.orderService.GetByIdAsync(id);
+            Response.Cookies.Append("orderr", Convert.ToString(order.Id));
+            return View(order);
+        }
+
+        public async Task<IActionResult> ChangedStatus(OrderViewDto order)
+        {
+            var orderJson = Request.Cookies["orderr"];
+            long id = Convert.ToInt64(orderJson);
+            var orderForUpdate = await this.orderService.ChangeOrderStatusAsync(id, order.Status);
+            return RedirectToAction("Orders");
+        }
 		public async Task<IActionResult> DeleteCategory(long id)
 		{
 			await this.categoryservice.DeleteAsync(id);

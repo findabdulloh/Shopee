@@ -21,28 +21,12 @@ public class UserService : IUserService
             return null;
         }
 
-		var mappedUser = new User()
-        {
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Email = dto.Email,
-            UserName = dto.UserName,
-            Password = dto.Password,
-            Phone = dto.Phone,
-            UserRole = UserRole.Customer,
-            ProfilePhotoUrl = dto.ProfilePhotoUrl
-        };
-		var cart = new CartCreationDto()
-		{
-			UserId = mappedUser.Id,
-		};
-
-		var result = await this.cartService.CreateAsync(cart);
+		var cart = await this.cartService.CreateAsync();
 
 
 		var newUser = new User()
 		{
-            CartId = result.Id,
+            CartId = cart.Id,
 			FirstName = dto.FirstName,
 			LastName = dto.LastName,
 			Email = dto.Email,
@@ -50,29 +34,25 @@ public class UserService : IUserService
 			Password = dto.Password,
 			Phone = dto.Phone,
 			UserRole = UserRole.Customer,
-			ProfilePhotoUrl = dto.ProfilePhotoUrl
+			ProfilePhotoUrl = dto.ProfilePhotoUrl,
+            CreatedAt = DateTime.UtcNow
 		};
 
-		await this.repostory.CreateAsync(newUser);
+		var createdUser = await this.repostory.CreateAsync(newUser);
 
         var userForResult = new UserViewDto()
         {
-            Id = mappedUser.Id,
-            FirstName = mappedUser.FirstName,
-            LastName = mappedUser.LastName,
-            Email = mappedUser.Email,
-            UserName = mappedUser.UserName,
-            Phone = mappedUser.Phone,
-            Role = mappedUser.UserRole,
-            CreatedAt = mappedUser.CreatedAt,
-            UpdatedAt = mappedUser.UpdatedAt,
-            ProfilePhotoUrl = mappedUser.ProfilePhotoUrl,
+            Id = createdUser.Id,
+            FirstName = createdUser.FirstName,
+            LastName = createdUser.LastName,
+            Email = createdUser.Email,
+            UserName = createdUser.UserName,
+            Phone = createdUser.Phone,
+            Role = createdUser.UserRole,
+            CreatedAt = createdUser.CreatedAt,
+            UpdatedAt = createdUser.UpdatedAt,
+            ProfilePhotoUrl = createdUser.ProfilePhotoUrl
         };
-
-        
-        
-
-
 
 		await this.repostory.SaveChangesAsync();
         return userForResult;

@@ -19,6 +19,7 @@ public class OrderService : IOrderService
     private IUserRepository userRepo = new UserRepository();
     private ICartService cartService = new CartService();
     private ICartRepository cartRepo = new CartRepository();
+    private IProductRepository productRepo = new ProductRepository();
     public async Task<OrderViewDto> ChangeOrderStatusAsync(long orderId, OrderStatus newStatus)
     {
         var entity = await this.orderRepo.GetAsync(u => u.Id == orderId);
@@ -77,6 +78,9 @@ public class OrderService : IOrderService
         {
             var orderItem = await orderItemRepo.GetAsync(o => o.Id == item.Id);
             orderItem.OrderId = createdOrder.Id;
+            var product = await productRepo.GetAsync(p => p.Id == item.Product.Id);
+            product.Count -= item.Count;
+            await productRepo.UpdateAsync(product);
             await orderItemRepo.UpdateAsync(orderItem);
         }
 
@@ -95,7 +99,11 @@ public class OrderService : IOrderService
             Items = cart.Items
         };
 
-        await this.orderItemRepo.SaveChangesAsync();
+        await orderItemRepo.SaveChangesAsync();
+        await orderRepo.SaveChangesAsync();
+        await cartRepo.SaveChangesAsync();
+        await userRepo.SaveChangesAsync();
+        await productRepo.SaveChangesAsync();
         return mappedDto;
     }
 

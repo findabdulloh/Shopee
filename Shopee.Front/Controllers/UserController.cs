@@ -4,6 +4,11 @@ using Newtonsoft.Json;
 using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
+using Shopee.Domain.Enums;
+using Shopee.Service.DTOs.Messages;
+using Shopee.Service.DTOs.OrderItems;
+using Shopee.Service.DTOs.Orders;
+using Shopee.Service.DTOs.Payments;
 using Shopee.Service.DTOs.Products;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
@@ -15,18 +20,59 @@ namespace Shopee.Web.Controllers
     {
         private ICategoryService categoryService = new CategoryService();
         private IProductService productservice = new ProductService();
+        private IMessageService messageService = new MessageService();
+        private ICartService cartService = new CartService();
+        private IOrderItemService ItemService   = new OrderItemService();
+        private IOrderService orderService = new OrderService();
         public IActionResult Index(UserViewDto user)
         {
 
             return View(user);
         }
-        public IActionResult Account()
+        public async Task<IActionResult> Cart()
+        {
+            var carts = await this.cartService.GetAllAsync();
+            List<OrderItemViewDto> orders = new List<OrderItemViewDto>();
+            decimal totalPrice = 0;
+            foreach (var item in carts)
+            {
+                OrderItemViewDto orderItem = new OrderItemViewDto();
+                orderItem = await this.ItemService.GetByIdAsync(item.Id);
+            
+                if (orderItem is not null)
+                {
+                    orders.Add(orderItem);
+                    totalPrice += orderItem.TotalPrice;
+                }
+            }
+            return View(new Tuple<List<OrderItemViewDto>, decimal>(orders, totalPrice));
+        }
+        public async Task<IActionResult> OrderCart()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> OrderCreate(PaymentCreationDto payment)
+        {
+			var userJson = Request.Cookies["account"];
+			var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+            payment.OrderId = 1;
+            var newOrder = new OrderCreationDto()
+            {
+                UserId = user.Id,
+                Payment = payment,
+            };
+            await this.orderService.CreateAsync(newOrder);
+            return RedirectToAction("Cart");
+		}
+
+
+		public IActionResult Account()
         {
             var userJson = Request.Cookies["account"];
             if (userJson != null)
             {
                 var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
-                ViewBag.User = user;
                 return View(user);
             }
             else
@@ -46,8 +92,21 @@ namespace Shopee.Web.Controllers
             var products = (await this.productservice.GetAllAsync()).Where(c=> c.CategoryName == categoryFind.Name).ToList();
             return View(products);
         }
+        public async Task<IActionResult> AddToCard(long id)
+        {
+            ViewBag.ProductId = id;
+            return View();
+        }
 
-        public async Task<IActionResult> ProductSearched(string search)
+        public  async Task<IActionResult> AddedtoCart(OrderItemCreationDto ordetitem)
+        {
+			var userJson = Request.Cookies["account"];
+			var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+            var result = await this.cartService.AddItemAsync(user.Id, ordetitem);
+            return RedirectToAction("Products");
+        }
+
+		public async Task<IActionResult> ProductSearched(string search)
         {
             if (string.IsNullOrWhiteSpace(search))
                 return View();
@@ -62,5 +121,33 @@ namespace Shopee.Web.Controllers
             }
             return View(result);
         }
-    }
+
+        public async Task<IActionResult> Question()
+        {
+            var userJson = Request.Cookies["account"];
+            var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+            var mesages = await this.messageService.GetAllForUserAsync(user.Id);
+            var results = mesages.Where(m=> m.UserId== user.Id).ToList();
+            return View(results);
+        }
+
+        public async Task<IActionResult> MessageCreate()
+        {
+            return View();
+        }
+        public async Task<IActionResult> SendMessage(MessageCreationDto message)
+        {
+			var userJson = Request.Cookies["account"];
+			var user = JsonConvert.DeserializeObject<UserViewDto>(userJson);
+			var newMessage = new MessageCreationDto()
+            {
+                Text = message.Text,
+                Type = MessageType.Question,
+                UserId = user.Id,
+            };
+            var result = await this.messageService.CreateAsync(newMessage);
+            return RedirectToAction("Question");
+        }
+
+	}
 }

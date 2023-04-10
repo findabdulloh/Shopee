@@ -11,7 +11,7 @@
         <button style="border: 1px solid #776BCC; border-radius: 5px; background-color: transparent; " type="submit">Search</button>
     </form>
 
-    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Admin" asp-action="ProductCreate">Create</a>
+    <a style="background-color: #776BCC; width:200px; color: #fff; padding: 5px 15px; border: 1px solid #776BCC; border-radius: 10px; margin-left: 200px;" class="nav-link btn btn-warning" asp-area="" asp-controller="Admin" asp-action="CategoryCreate">Create</a>
 </div>
 
 <div class="container container-fluid d-flex  flex-wrap">
@@ -34,8 +34,8 @@
                     <td>@product.CreatedAt</td>
                     <td>@product.Description</td>
                     <td class="d-flex justify-content-around">
-                        <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateProduct","Admin", new {Id = product.Id})">Edit</a>
-                        <a class="nav-link btn" style="background-color: red; border-radius:20px; color: #fff;" href="@Url.Action("DeleteProduct", "Admin" , new {Id = product.Id})">Delete</a>
+                        <a class="nav-link btn" style="background-color: #776BCC; border-radius:20px; color: #fff;" href="@Url.Action("UpdateCategory","Admin", new {Id = product.Id})">Edit</a>
+                        <a class="nav-link btn" style="background-color: red; border-radius:20px; color: #fff;" href="@Url.Action("DeleteCategory", "Admin" , new {Id = product.Id})">Delete</a>
                     </td>
                 </tr>
             }

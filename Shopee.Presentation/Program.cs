@@ -18,10 +18,8 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-        //ShopeDbContext context = new ShopeDbContext();
-        //IGenericRepository<User> user = new GenericRepository<User>(context);
         IUserRepository repo = new UserRepository();
-        IUserService user = new UserService(repo);
+        IUserService userservice = new UserService();
 
 
 
@@ -66,20 +64,14 @@ class Program
         //};
 
 
-
-        //await user.DeleteAsync(1);
-        //await user.DeleteAsync(2);
-        //await user.DeleteAsync(3);
-        //await user.DeleteAsync(4);
-
         //foreach (var item in users)
         //{
-        //    await user.CreateAsync(item);
+        //    await userservice.CreateAsync(item);
         //}
 
-        IProductRepository product = new ProductRepository();
-        IProductService product1 = new ProductService();
-        
+        //IProductRepository product = new ProductRepository();
+        //IProductService product1 = new ProductService();
+
         //var products = new List<ProductCreationDto>
         //{
         //    new ProductCreationDto
@@ -150,7 +142,7 @@ class Program
         //}
 
         //ICategoryService category = new CategoryService();
-        //var products = new List<CategoryCreationDto>()
+        //var categories = new List<CategoryCreationDto>()
         //{
         //    new CategoryCreationDto()
         //    {
@@ -178,7 +170,10 @@ class Program
         //        Description = "Grains and organic category"
         //    }
         //};
-
+        //foreach (var item in categories)
+        //{
+        //    await category.CreateAsync(item);
+        //}
 
         //var userss = await user.GetAllAsync();
         //foreach (var item in userss)

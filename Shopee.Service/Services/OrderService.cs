@@ -84,7 +84,6 @@ public class OrderService : IOrderService
         cartEntity.OrderItemIds = new List<long>();
         await cartRepo.UpdateAsync(cartEntity);
         
-        await this.orderItemRepo.SaveChangesAsync();
 
         var mappedDto = new OrderViewDto
         {
@@ -96,6 +95,7 @@ public class OrderService : IOrderService
             Items = cart.Items
         };
 
+        await this.orderItemRepo.SaveChangesAsync();
         return mappedDto;
     }
 

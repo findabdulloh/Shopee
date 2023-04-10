@@ -12,8 +12,7 @@ namespace Shopee.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private static IUserRepository repo = new UserRepository();
-        private IUserService userservice = new UserService(repo);
+        private IUserService userservice = new UserService();
         public IActionResult Index()
         {
             ViewData["Title"] = "Login";

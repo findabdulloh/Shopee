@@ -3,35 +3,39 @@ using Newtonsoft.Json;
 using Shopee.Data.IRepositories;
 using Shopee.Data.Repositories;
 using Shopee.Domain.Entities;
+using Shopee.Domain.Enums;
+using Shopee.Service.DTOs.Categories;
+using Shopee.Service.DTOs.Messages;
 using Shopee.Service.DTOs.Products;
 using Shopee.Service.DTOs.Users;
 using Shopee.Service.Interfaces;
 using Shopee.Service.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Shopee.Web.Controllers
 {
 	public class AdminController : Controller
 	{
-        private static IUserRepository UserRepo = new UserRepository();
-        private IUserService userservice = new UserService(UserRepo);
-
-		private static IProductRepository ProductRepo = new ProductRepository();
+        private IUserService userservice = new UserService();
 		private IProductService productservice = new ProductService();
-
-        private ICategoryService categoryservice = new CategoryService(); 
-		public async Task<IActionResult> Users()
+        private ICategoryService categoryservice = new CategoryService();
+        private IMessageService messageService  = new MessageService();
+        private IOrderService orderService  = new OrderService();
+        public async Task<IActionResult> Users()
 		{
 			var users = await this.userservice.GetAllAsync();
 			return View(users);
 		}
         public async Task<IActionResult> Orders()
         {
-            return View();
+            var orders = await this.orderService.GetAllAsync(o=> o.Id > 0);
+            return View(orders);
         }
         public async Task<IActionResult> Questions()
         {
-            return View();
+            var questions = await this.messageService.GetAllQuestionsAsync();
+            return View(questions);
         }
         public async Task<IActionResult> Category()
         {
@@ -53,12 +57,64 @@ namespace Shopee.Web.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+		
+		public IActionResult AnswerMessage(long id, long userId)
+        {
+			Response.Cookies.Append("id", JsonConvert.SerializeObject(id));
+			Response.Cookies.Append("userId", JsonConvert.SerializeObject(userId));
+			return View();
+        }
+		public async Task<IActionResult> SendMessage(MessageCreationDto message, long id)
+		{
+			var userId = Request.Cookies["userId"];
+			long userId2 = JsonConvert.DeserializeObject<long>(userId);
 
+			var idJson = Request.Cookies["id"];
+			long repid = JsonConvert.DeserializeObject<long>(idJson);
+
+			var newMessage = new MessageCreationDto()
+			{
+                UserId = userId2,
+				RepliedMessageId = repid,
+				Text = message.Text,
+				Type = MessageType.Answer,
+			};
+			var result = await this.messageService.CreateAsync(newMessage);
+			return RedirectToAction("Questions");
+		}
+
+		public async Task<IActionResult> DeleteCategory(long id)
+		{
+			await this.categoryservice.DeleteAsync(id);
+			return RedirectToAction("Category");
+		}
+
+        public async Task<IActionResult> UpdateCategory(long id)
+        {
+            ViewBag.idcategory = id;
+            return View();
+        }
+
+        public async Task<IActionResult> UpdateCategoryEnd(CategoryCreationDto category,long id)
+        {
+            var update = await this.categoryservice.ModifyAsync(id, category);
+            return RedirectToAction("Category");
+        }
         #region Product
 
         public IActionResult ProductCreate()
         {
             return View();
+        }
+
+        public IActionResult CategoryCreate()
+        {
+            return View();
+        }
+        public async Task<IActionResult> CategoryCreateEnd( CategoryCreationDto category)
+        {
+            var result = await this.categoryservice.CreateAsync(category);
+            return RedirectToAction("Category");
         }
         public async Task<IActionResult> Product()
         {

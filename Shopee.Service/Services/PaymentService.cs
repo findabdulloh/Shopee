@@ -16,7 +16,6 @@ public class PaymentService : IPaymentService
 
     public async Task<Payment> CreateAsync(PaymentCreationDto dto)
     {
-        decimal amount = 0;
         var cart = await cartService.GetByUserIdAsync(dto.UserId);
 
         var payment = new Payment

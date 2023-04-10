@@ -143,7 +143,7 @@ public class CartService : ICartService
     {
         var user = await userRepo.GetAsync(u => u.Id == userId);
 
-        var entity = await cartRepo.GetAsync(o => o.Id == user.CartId);
+        var entity = await cartRepo.GetAsync(o => o.Id == user.Id);
         if (entity is null) return null;
 
         var cartItems = await orderItemService
